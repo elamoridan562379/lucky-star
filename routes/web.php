@@ -1,0 +1,58 @@
+<?php
+
+use App\Http\Livewire\Cashier\PosTerminal;
+use App\Http\Livewire\Cashier\TransactionHistory;
+use App\Http\Livewire\Cashier\ReceiptView;
+use App\Http\Livewire\Manager\DashboardOverview;
+use App\Http\Livewire\Manager\ProductManager;
+use App\Http\Livewire\Manager\InventoryStockIn;
+use App\Http\Livewire\Manager\StockMovementsTable;
+use App\Http\Livewire\Manager\SalesReport;
+use App\Http\Livewire\Manager\UserManager;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Http\RedirectResponse;
+
+Route::get('/whoami', function () {
+    return auth()->check()
+        ? ['email' => auth()->user()->email, 'role' => auth()->user()->role]
+        : 'NOT LOGGED IN';
+});
+
+Route::get('/', function (): RedirectResponse {
+    if (!auth()->check()) {
+        return redirect()->route('login');
+    }
+
+    $role = auth()->user()->role ?? 'cashier';
+
+    // manager/admin -> manager dashboard
+    if (in_array($role, ['manager', 'admin'], true)) {
+        return redirect()->route('dashboard'); // /manager/dashboard
+    }
+
+    // cashier -> POS
+    return redirect()->route('pos'); // /pos
+});
+
+// ── Auth routes (Laravel Breeze) ──────────────────────
+require __DIR__ . '/auth.php';
+
+// — Cashier routes
+Route::middleware(['auth', 'role:cashier,manager,admin'])->group(function (): void {
+    Route::get('/pos', PosTerminal::class)->name('pos');
+    Route::get('/transactions', TransactionHistory::class)->name('transactions.index');
+    Route::get('/transactions/{id}', ReceiptView::class)->name('transactions.show');
+});
+
+// — Manager routes
+Route::middleware(['auth', 'role:manager,admin'])
+    ->prefix('manager')
+    ->group(function (): void {
+
+        Route::get('/dashboard', DashboardOverview::class)->name('dashboard');
+        Route::get('/products', ProductManager::class)->name('products.index');
+        Route::get('/inventory/stock-in', InventoryStockIn::class)->name('inventory.stock-in');
+        Route::get('/inventory/movements', StockMovementsTable::class)->name('inventory.movements');
+        Route::get('/reports/sales', SalesReport::class)->name('reports.sales');
+        Route::get('/users', UserManager::class)->name('users.index');
+    });
