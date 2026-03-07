@@ -46,6 +46,8 @@
             box-shadow:0 30px 80px rgba(0,0,0,.35);
             overflow:hidden;
             padding:36px 40px 28px;
+            animation: fadeInUp 0.8s ease-out;
+            transition: transform 0.3s ease;
         }
         .logo{
             width:72px;height:72px;
@@ -55,6 +57,11 @@
             background: radial-gradient(circle at 30% 30%, #e8b57b 0%, var(--caramel) 45%, #a55a1f 100%);
             box-shadow:0 14px 30px rgba(200,129,58,.35);
             color:#fff;font-size:30px;
+            animation: bounceIn 1s ease-out 0.3s both;
+            transition: transform 0.3s ease;
+        }
+        .logo:hover{
+            transform: scale(1.05) rotate(5deg);
         }
         .title{
             text-align:center;
@@ -81,8 +88,54 @@
             color:#1f3c5a;
         }
         .demo b{ color:#0d2d4a; }
-        a.link{ color:#b86a2b; font-weight:700; text-decoration:none; }
-        a.link:hover{ text-decoration:underline; }
+        a.link{ color:#b86a2b; font-weight:700; text-decoration:none; transition: all 0.3s ease; }
+        a.link:hover{ text-decoration:underline; color:#d4a847; }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .error-message {
+            background: rgba(234, 56, 56, 0.1);
+            border: 1px solid rgba(234, 56, 56, 0.3);
+            border-radius: 8px;
+            padding: 8px 12px;
+            color: #d32f2f;
+            font-size: 13px;
+            margin-top: 4px;
+            animation: shake 0.5s ease-in-out;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
     </style>
 
     <div class="bg">

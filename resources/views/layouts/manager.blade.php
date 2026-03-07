@@ -339,7 +339,7 @@
 <aside class="sidebar">
     <div class="sidebar-brand">
         <span class="brand-name">✦ Lucky Star</span>
-        <span class="brand-sub">Manager Portal</span>
+        <span class="brand-sub">{{ auth()->user()->role === 'admin' ? 'Admin Portal' : 'Manager Portal' }}</span>
     </div>
 
     <nav class="sidebar-nav">
