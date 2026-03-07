@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lucky Star — {{ $title ?? (auth()->user()->role === 'admin' ? 'Admin' : 'Manager') }}</title>
+    <title>Lucky Star — {{ $title ?? (auth()->user()->role === 'admin' ? 'Admin' : 'Inventory Clerk') }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -33,7 +33,7 @@
         /* Sidebar */
         .sidebar {
             width: var(--sidebar-w);
-            background: linear-gradient(180deg, #5a4231 0%, #3a281d 100%); /* ✅ lighter coffee */
+            background: linear-gradient(180deg, #3d7a3d 0%, #2d5a2d 100%); /* Green theme for inventory */
             display: flex;
             flex-direction: column;
             position: fixed;
@@ -48,7 +48,7 @@
         .brand-name {
             font-family: 'Playfair Display', serif;
             font-size: 1.2rem;
-            color: rgba(212,168,71,0.98); /* ✅ brighter */
+            color: rgba(212,168,71,0.98);
             display: block;
             letter-spacing: 0.02em;
         }
@@ -56,7 +56,7 @@
             font-size: 0.62rem;
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: rgba(245,234,216,0.65); /* ✅ more readable */
+            color: rgba(245,234,216,0.65);
             margin-top: 0.2rem;
         }
 
@@ -71,7 +71,7 @@
             font-size: 0.78rem;
             font-weight: 700;
             letter-spacing: 0.04em;
-            color: rgba(245,234,216,0.82); /* ✅ brighter */
+            color: rgba(245,234,216,0.82);
             text-decoration: none;
             transition: all 0.15s;
             position: relative;
@@ -91,7 +91,7 @@
             position: absolute;
             left: 0; top: 20%; bottom: 20%;
             width: 3px;
-            background: rgba(212,168,71,0.95); /* ✅ gold */
+            background: rgba(212,168,71,0.95);
             border-radius: 0 2px 2px 0;
         }
 
@@ -101,7 +101,7 @@
             font-size: 0.58rem;
             letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: rgba(245,234,216,0.42); /* ✅ brighter label */
+            color: rgba(245,234,216,0.42);
             padding: 0.75rem 0.85rem 0.3rem;
             margin-top: 0.25rem;
         }
@@ -297,29 +297,6 @@
         .form-label { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #7a5c44; margin-bottom: 0.35rem; }
         .form-error { font-size: 0.7rem; color: #c0392b; margin-top: 0.25rem; }
 
-        /* Modal */
-        .modal-bg { background: rgba(20,10,5,0.7); backdrop-filter: blur(3px); position: fixed; inset: 0; z-index: 200; display: flex; align-items: center; justify-content: center; padding: 1rem; }
-        .modal-box {
-            background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            width: 100%;
-            max-width: 480px;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.35);
-        }
-        .modal-header {
-            background: linear-gradient(135deg, var(--roast), var(--espresso));
-            padding: 1.1rem 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .modal-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--caramel); }
-        .modal-close { color: rgba(245,234,216,0.4); background: none; border: none; font-size: 1.1rem; cursor: pointer; transition: color 0.15s; }
-        .modal-close:hover { color: var(--cream); }
-        .modal-body { padding: 1.5rem; }
-        .modal-footer { padding: 1rem 1.5rem; background: #faf5ee; border-top: 1px solid rgba(74,37,24,0.08); display: flex; justify-content: flex-end; gap: 0.75rem; }
-
         /* Alerts */
         .alert-success { background: #f0faf0; border: 1px solid #b8d8b8; color: #2d5a2d; border-radius: 10px; padding: 0.75rem 1rem; font-size: 0.82rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
         .alert-error   { background: #fdf0f0; border: 1px solid #e8b8b8; color: #8a2020; border-radius: 10px; padding: 0.75rem 1rem; font-size: 0.82rem; margin-bottom: 1rem; }
@@ -339,45 +316,32 @@
 <aside class="sidebar">
     <div class="sidebar-brand">
         <span class="brand-name">✦ Lucky Star</span>
-        <span class="brand-sub">{{ auth()->user()->role === 'admin' ? 'Admin Portal' : 'Manager Portal' }}</span>
+        <span class="brand-sub">{{ auth()->user()->role === 'admin' ? 'Admin Portal' : 'Inventory Portal' }}</span>
     </div>
 
     <nav class="sidebar-nav">
-        <span class="nav-section-label">Overview</span>
-        <a href="{{ route('dashboard') }}" class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-            <span class="nav-icon">◈</span> Dashboard
+        <span class="nav-section-label">Dashboard</span>
+        <a href="{{ route('inventory.dashboard') }}" class="nav-item {{ request()->routeIs('inventory.dashboard') ? 'active' : '' }}">
+            <span class="nav-icon">◈</span> Inventory Overview
         </a>
 
-        <span class="nav-section-label">Catalog</span>
-        <a href="{{ route('manager.products') }}" class="nav-item {{ request()->routeIs('manager.products') ? 'active' : '' }}">
-            <span class="nav-icon">☕</span> Products
-        </a>
-
-        <span class="nav-section-label">Inventory</span>
-        <a href="{{ route('inventory.dashboard') }}" class="nav-item {{ request()->routeIs('inventory.dashboard') || request()->routeIs('inventory.stock-in') ? 'active' : '' }}">
+        <span class="nav-section-label">Stock Management</span>
+        <a href="{{ route('inventory.stock-in') }}" class="nav-item {{ request()->routeIs('inventory.stock-in') ? 'active' : '' }}">
             <span class="nav-icon">↕</span> Stock In / Out
         </a>
         <a href="{{ route('inventory.movements') }}" class="nav-item {{ request()->routeIs('inventory.movements') ? 'active' : '' }}">
             <span class="nav-icon">≡</span> Movement Log
         </a>
 
-        <span class="nav-section-label">Reports</span>
-        <a href="{{ route('reports.sales') }}" class="nav-item {{ request()->routeIs('reports.*') ? 'active' : '' }}">
-            <span class="nav-icon">↗</span> Sales Report
-        </a>
-        <a href="{{ route('transactions.index') }}" class="nav-item {{ request()->routeIs('transactions.*') ? 'active' : '' }}">
-            <span class="nav-icon">🧾</span> Transactions
-        </a>
-
-        <span class="nav-section-label">System</span>
-        <a href="{{ route('users.index') }}" class="nav-item {{ request()->routeIs('users.*') ? 'active' : '' }}">
-            <span class="nav-icon">◎</span> Users
+        <span class="nav-section-label">Catalog</span>
+        <a href="{{ route('inventory.products') }}" class="nav-item {{ request()->routeIs('inventory.products') ? 'active' : '' }}">
+            <span class="nav-icon">☕</span> Product Catalog
         </a>
     </nav>
 
     <div class="sidebar-footer">
         <div class="user-name">{{ auth()->user()->name }}</div>
-        <div class="user-role">{{ ucfirst(auth()->user()->role) }}</div>
+        <div class="user-role">{{ ucfirst(str_replace('_', ' ', auth()->user()->role)) }}</div>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="logout-btn">Sign out →</button>

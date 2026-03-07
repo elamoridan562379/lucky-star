@@ -16,6 +16,7 @@ class Product extends Model
         'cost_price',
         'stock_qty',
         'reorder_level',
+        'low_stock_threshold',
         'is_active',
     ];
 
@@ -38,13 +39,40 @@ class Product extends Model
 
     public function scopeLowStock($query)
     {
-        return $query->whereRaw('stock_qty <= reorder_level')->where('is_active', true);
+        return $query->whereRaw('stock_qty <= low_stock_threshold')->where('is_active', true);
+    }
+
+    public function scopeCriticalStock($query)
+    {
+        return $query->whereRaw('stock_qty <= (low_stock_threshold / 2)')->where('is_active', true);
     }
 
     // ── Helpers ────────────────────────────────────────────
     public function isLowStock(): bool
     {
-        return $this->stock_qty <= $this->reorder_level;
+        return $this->stock_qty <= $this->low_stock_threshold;
+    }
+
+    public function isCriticalStock(): bool
+    {
+        return $this->stock_qty <= ($this->low_stock_threshold / 2);
+    }
+
+    public function getStockStatusAttribute(): string
+    {
+        if ($this->isCriticalStock()) return 'critical';
+        if ($this->isLowStock()) return 'low';
+        return 'normal';
+    }
+
+    public function getStockStatusColorAttribute(): string
+    {
+        return match ($this->stock_status) {
+            'critical' => 'red',
+            'low' => 'yellow',
+            'normal' => 'green',
+            default => 'gray',
+        };
     }
 
     public function hasStock(int $qty = 1): bool

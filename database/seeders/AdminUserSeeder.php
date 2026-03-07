@@ -13,7 +13,7 @@ class AdminUserSeeder extends Seeder
     User::updateOrCreate(
         ['email' => 'admin@luckystar.com'],
         [
-            'name' => 'Admin',
+            'name' => 'System Admin',
             'password' => Hash::make('admin123'),
             'role' => 'admin',
         ]
@@ -22,16 +22,25 @@ class AdminUserSeeder extends Seeder
     User::updateOrCreate(
         ['email' => 'manager@luckystar.com'],
         [
-            'name' => 'Manager',
+            'name' => 'Maria Santos',
             'password' => Hash::make('manager123'),
             'role' => 'manager',
         ]
     );
 
     User::updateOrCreate(
+        ['email' => 'clerk@luckystar.com'],
+        [
+            'name' => 'Ana Reyes',
+            'password' => Hash::make('clerk123'),
+            'role' => 'inventory_clerk',
+        ]
+    );
+
+    User::updateOrCreate(
         ['email' => 'cashier@luckystar.com'],
         [
-            'name' => 'Cashier',
+            'name' => 'Juan Dela Cruz',
             'password' => Hash::make('cashier123'),
             'role' => 'cashier',
         ]

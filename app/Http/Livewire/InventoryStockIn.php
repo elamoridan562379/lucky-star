@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Manager;
+namespace App\Http\Livewire;
 
 use App\Models\Product;
 use App\Models\StockMovement;
@@ -143,11 +143,9 @@ class InventoryStockIn extends Component
             ->limit(10)
             ->get();
 
-        $layout = auth()->user()->role === 'inventory_clerk' ? 'layouts.inventory-clerk' : 'layouts.manager';
-        
-        return view('livewire.manager.inventory-stock-in', [
+        return view('livewire.inventory-stock-in', [
             'products'        => $products,
             'recentMovements' => $recentMovements,
-        ])->layout($layout);
+        ])->layout('layouts.inventory-clerk');
     }
 }

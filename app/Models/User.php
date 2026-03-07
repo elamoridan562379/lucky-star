@@ -30,6 +30,16 @@ class User extends Authenticatable
         return $this->role === 'cashier';
     }
 
+    public function isInventoryClerk(): bool
+    {
+        return $this->role === 'inventory_clerk';
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
     // ── Relationships ──────────────────────────────────────
     public function transactions()
     {

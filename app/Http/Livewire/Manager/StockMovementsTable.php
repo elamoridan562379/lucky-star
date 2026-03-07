@@ -66,10 +66,12 @@ class StockMovementsTable extends Component
 
             $products = Product::orderBy('name')->get();
 
+            $layout = auth()->user()->role === 'inventory_clerk' ? 'layouts.inventory-clerk' : 'layouts.manager';
+
             return view('livewire.manager.stock-movements-table', [
                 'movements' => $movements,
                 'products'  => $products,
-            ])->layout('layouts.manager');
+            ])->layout($layout);
         }
 
         $movements = StockMovement::with(['product', 'createdBy'])
@@ -83,9 +85,11 @@ class StockMovementsTable extends Component
 
         $products = Product::orderBy('name')->get();
 
+        $layout = auth()->user()->role === 'inventory_clerk' ? 'layouts.inventory-clerk' : 'layouts.manager';
+
         return view('livewire.manager.stock-movements-table', [
             'movements' => $movements,
             'products'  => $products,
-        ])->layout('layouts.manager');
+        ])->layout($layout);
     }
 }

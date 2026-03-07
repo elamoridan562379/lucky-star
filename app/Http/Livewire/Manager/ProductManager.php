@@ -149,7 +149,9 @@ class ProductManager extends Component
             ->orderBy('category')->orderBy('name')
             ->paginate(15);
 
+        $layout = auth()->user()->role === 'inventory_clerk' ? 'layouts.inventory-clerk' : 'layouts.manager';
+
         return view('livewire.manager.product-manager', ['products' => $products])
-            ->layout('layouts.manager');
+            ->layout($layout);
     }
 }
