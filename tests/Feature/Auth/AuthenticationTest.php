@@ -27,7 +27,9 @@ class AuthenticationTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
+        
+        // Default user role is 'cashier', so redirect to POS
+        $response->assertRedirect('/pos');
     }
 
     public function test_users_can_not_authenticate_with_invalid_password(): void
