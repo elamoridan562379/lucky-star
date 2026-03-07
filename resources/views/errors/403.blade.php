@@ -148,10 +148,7 @@
                 </div>
             @endif
             
-            <div class="suggestion-item">
-                <span>🏠</span>
-                <a href="{{ route('dashboard') }}" class="btn btn-secondary">Go to Dashboard</a>
-            </div>
+
         </div>
 
         <div style="font-size: 0.8rem; color: #999;">

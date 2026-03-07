@@ -46,6 +46,8 @@ class InventoryMovements extends Component
 
     public function render()
     {
+        $layout = in_array(auth()->user()->role, ['admin', 'manager']) ? 'layouts.manager' : 'layouts.inventory-clerk';
+
         // If cleared, show no results
         if ($this->cleared) {
             $movements = StockMovement::query()
@@ -57,7 +59,7 @@ class InventoryMovements extends Component
             return view('livewire.inventory-movements', [
                 'movements' => $movements,
                 'products'  => $products,
-            ])->layout('layouts.inventory-clerk');
+            ])->layout($layout);
         }
 
         $movements = StockMovement::with(['product', 'createdBy'])
@@ -74,6 +76,6 @@ class InventoryMovements extends Component
         return view('livewire.inventory-movements', [
             'movements' => $movements,
             'products'  => $products,
-        ])->layout('layouts.inventory-clerk');
+        ])->layout($layout);
     }
 }

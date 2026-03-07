@@ -354,10 +354,13 @@
         </a>
 
         <span class="nav-section-label">Inventory</span>
-        <a href="{{ route('inventory.dashboard') }}" class="nav-item {{ request()->routeIs('inventory.dashboard') || request()->routeIs('inventory.stock-in') ? 'active' : '' }}">
+        <a href="{{ route('manager.inventory') }}" class="nav-item {{ request()->routeIs('manager.inventory') ? 'active' : '' }}">
+            <span class="nav-icon">◈</span> Inventory Overview
+        </a>
+        <a href="{{ route('manager.stock-in') }}" class="nav-item {{ request()->routeIs('manager.stock-in') ? 'active' : '' }}">
             <span class="nav-icon">↕</span> Stock In / Out
         </a>
-        <a href="{{ route('inventory.movements') }}" class="nav-item {{ request()->routeIs('inventory.movements') ? 'active' : '' }}">
+        <a href="{{ route('manager.movements') }}" class="nav-item {{ request()->routeIs('manager.movements') ? 'active' : '' }}">
             <span class="nav-icon">≡</span> Movement Log
         </a>
 

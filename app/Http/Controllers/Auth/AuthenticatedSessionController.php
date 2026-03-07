@@ -36,6 +36,11 @@ class AuthenticatedSessionController extends Controller
             return redirect()->route('dashboard'); // /manager/dashboard
         }
 
+        // Inventory Clerk -> Inventory dashboard
+        if ($role === 'inventory_clerk') {
+            return redirect()->route('inventory.dashboard'); // /inventory/dashboard
+        }
+
         // Cashier -> POS
         return redirect()->route('pos'); // /pos
     }

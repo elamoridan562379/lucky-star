@@ -60,9 +60,11 @@ class InventoryProducts extends Component
             ->orderBy('name')
             ->paginate(20);
 
+        $layout = in_array(auth()->user()->role, ['admin', 'manager']) ? 'layouts.manager' : 'layouts.inventory-clerk';
+
         return view('livewire.inventory-products', [
             'products' => $products,
             'categories' => $this->categories,
-        ])->layout('layouts.inventory-clerk');
+        ])->layout($layout);
     }
 }

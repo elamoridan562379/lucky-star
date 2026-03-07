@@ -39,8 +39,10 @@ class TransactionHistory extends Component
             $query->where('cashier_id', auth()->id());
         }
 
+        $layout = auth()->user()->isCashier() ? 'layouts.cashier' : 'layouts.manager';
+
         return view('livewire.cashier.transaction-history', [
             'transactions' => $query->paginate(20),
-        ])->layout('layouts.cashier');
+        ])->layout($layout);
     }
 }

@@ -143,9 +143,11 @@ class InventoryStockIn extends Component
             ->limit(10)
             ->get();
 
+        $layout = in_array(auth()->user()->role, ['admin', 'manager']) ? 'layouts.manager' : 'layouts.inventory-clerk';
+
         return view('livewire.inventory-stock-in', [
             'products'        => $products,
             'recentMovements' => $recentMovements,
-        ])->layout('layouts.inventory-clerk');
+        ])->layout($layout);
     }
 }

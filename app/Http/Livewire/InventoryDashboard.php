@@ -75,10 +75,12 @@ class InventoryDashboard extends Component
 
     public function render()
     {
+        $layout = in_array(auth()->user()->role, ['admin', 'manager']) ? 'layouts.manager' : 'layouts.inventory-clerk';
+
         return view('livewire.inventory-dashboard', [
             'products' => $this->products,
             'categories' => $this->categories,
             'recentMovements' => $this->recentMovements,
-        ])->layout('layouts.inventory-clerk');
+        ])->layout($layout);
     }
 }

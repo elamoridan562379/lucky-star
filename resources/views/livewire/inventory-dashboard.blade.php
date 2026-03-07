@@ -1,187 +1,156 @@
 <div>
+    <!-- Header -->
+    <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:1.75rem; flex-wrap:wrap; gap:1rem;">
+        <h1 class="page-title" style="margin-bottom:0;">Inventory Overview</h1>
+        <span style="font-size:0.72rem; color:#9a7a68; letter-spacing:0.06em; text-transform:uppercase; font-family:'Lato',sans-serif;">
+            {{ now()->format('l, F j Y') }}
+        </span>
+    </div>
+
     <!-- Header Stats -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <div class="bg-white rounded-lg shadow p-6">
-            <div class="flex items-center">
-                <div class="flex-shrink-0 bg-blue-500 rounded-md p-3">
-                    <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-                    </svg>
-                </div>
-                <div class="ml-5 w-0 flex-1">
-                    <dl>
-                        <dt class="text-sm font-medium text-gray-500 truncate">Total Products</dt>
-                        <dd class="text-lg font-semibold text-gray-900">{{ $totalProducts }}</dd>
-                    </dl>
-                </div>
-            </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; margin-bottom:1.75rem;">
+        <div class="kpi-card kpi-roast">
+            <div class="kpi-label">Total Products</div>
+            <div class="kpi-value">{{ $totalProducts }}</div>
+            <div class="kpi-sub">Active in catalog</div>
         </div>
 
-        <div class="bg-white rounded-lg shadow p-6">
-            <div class="flex items-center">
-                <div class="flex-shrink-0 bg-red-500 rounded-md p-3">
-                    <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-                    </svg>
-                </div>
-                <div class="ml-5 w-0 flex-1">
-                    <dl>
-                        <dt class="text-sm font-medium text-gray-500 truncate">Critical Stock</dt>
-                        <dd class="text-lg font-semibold text-red-600">{{ $criticalCount }}</dd>
-                    </dl>
-                </div>
-            </div>
+        <div class="kpi-card kpi-red">
+            <div class="kpi-label">Critical Stock</div>
+            <div class="kpi-value" style="color:#8a2020">{{ $criticalCount }}</div>
+            <div class="kpi-sub">Needs immediate restock</div>
         </div>
 
-        <div class="bg-white rounded-lg shadow p-6">
-            <div class="flex items-center">
-                <div class="flex-shrink-0 bg-yellow-500 rounded-md p-3">
-                    <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                </div>
-                <div class="ml-5 w-0 flex-1">
-                    <dl>
-                        <dt class="text-sm font-medium text-gray-500 truncate">Low Stock</dt>
-                        <dd class="text-lg font-semibold text-yellow-600">{{ $lowStockCount }}</dd>
-                    </dl>
-                </div>
-            </div>
+        <div class="kpi-card kpi-gold">
+            <div class="kpi-label">Low Stock</div>
+            <div class="kpi-value" style="color:#8a5a20">{{ $lowStockCount }}</div>
+            <div class="kpi-sub">Below threshold</div>
         </div>
 
-        <div class="bg-white rounded-lg shadow p-6">
-            <div class="flex items-center">
-                <div class="flex-shrink-0 bg-green-500 rounded-md p-3">
-                    <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                </div>
-                <div class="ml-5 w-0 flex-1">
-                    <dl>
-                        <dt class="text-sm font-medium text-gray-500 truncate">Normal Stock</dt>
-                        <dd class="text-lg font-semibold text-green-600">{{ $totalProducts - $criticalCount - $lowStockCount }}</dd>
-                    </dl>
-                </div>
-            </div>
+        <div class="kpi-card kpi-moss">
+            <div class="kpi-label">Normal Stock</div>
+            <div class="kpi-value" style="color:#2d5a2d">{{ $totalProducts - $criticalCount - $lowStockCount }}</div>
+            <div class="kpi-sub">Healthy levels</div>
         </div>
     </div>
 
     <!-- Filters -->
-    <div class="bg-white rounded-lg shadow p-4 mb-6">
-        <div class="flex flex-col sm:flex-row gap-4">
-            <div class="flex-1">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Stock Status</label>
-                <select wire:model.live="filter" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                    <option value="all">All Products</option>
-                    <option value="critical">Critical Only</option>
-                    <option value="low">Low Stock Only</option>
-                    <option value="normal">Normal Stock Only</option>
-                </select>
-            </div>
-            <div class="flex-1">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                <select wire:model.live="category" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                    <option value="all">All Categories</option>
-                    @foreach($categories as $cat)
-                        <option value="{{ $cat }}">{{ ucfirst($cat) }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="flex items-end">
-                <button wire:click="refreshStats" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-                    Refresh
-                </button>
+    <div class="card mb-6">
+        <div class="card-header">
+            <span class="card-title">🔍 Filters & Search</span>
+            <button wire:click="refreshStats" class="btn-secondary" style="padding: 0.35rem 0.8rem; font-size: 0.7rem;">Refresh</button>
+        </div>
+        <div class="p-6">
+            <div style="display:flex; flex-wrap:wrap; gap:1.25rem;">
+                <div style="flex:1; min-width:200px;">
+                    <label class="form-label">Stock Status</label>
+                    <select wire:model.live="filter" class="form-input">
+                        <option value="all">All Products</option>
+                        <option value="critical">Critical Only</option>
+                        <option value="low">Low Stock Only</option>
+                        <option value="normal">Normal Stock Only</option>
+                    </select>
+                </div>
+                <div style="flex:1; min-width:200px;">
+                    <label class="form-label">Category</label>
+                    <select wire:model.live="category" class="form-input">
+                        <option value="all">All Categories</option>
+                        @foreach($categories as $cat)
+                            <option value="{{ $cat }}">{{ ucfirst(str_replace('_', ' ', $cat)) }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Products Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1.25rem; margin-bottom:1.75rem;">
         @foreach($products as $product)
-            <div class="bg-white rounded-lg shadow p-4 border-l-4 border-{{ $product->stock_status_color }}-500">
-                <div class="flex justify-between items-start mb-2">
-                    <h3 class="font-semibold text-gray-900">{{ $product->name }}</h3>
-                    <span class="px-2 py-1 text-xs rounded-full bg-{{ $product->stock_status_color }}-100 text-{{ $product->stock_status_color }}-800">
-                        {{ ucfirst($product->stock_status) }}
-                    </span>
-                </div>
-                
-                <div class="space-y-1 text-sm text-gray-600">
-                    <div class="flex justify-between">
-                        <span>Current Stock:</span>
-                        <span class="font-medium {{ $product->stock_status === 'critical' ? 'text-red-600' : ($product->stock_status === 'low' ? 'text-yellow-600' : 'text-green-600') }}">
-                            {{ $product->stock_qty }} units
+            <div class="card" style="border-left: 4px solid {{ $product->stock_status === 'critical' ? '#c0392b' : ($product->stock_status === 'low' ? '#d4a847' : '#3d7a3d') }}">
+                <div class="p-4">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.75rem;">
+                        <h3 style="font-family:'Playfair Display',serif; font-weight:700; color:var(--roast); font-size:1rem;">{{ $product->name }}</h3>
+                        <span class="badge {{ $product->stock_status === 'critical' ? 'badge-out' : ($product->stock_status === 'low' ? 'badge-low' : 'badge-active') }}">
+                            {{ ucfirst($product->stock_status) }}
                         </span>
                     </div>
-                    <div class="flex justify-between">
-                        <span>Threshold:</span>
-                        <span>{{ $product->low_stock_threshold }} units</span>
+                    
+                    <div style="font-size:0.82rem; color:#3d2415; display:grid; gap:0.4rem;">
+                        <div style="display:flex; justify-content:space-between;">
+                            <span style="color:#9a7a68;">Current Stock:</span>
+                            <span style="font-weight:700; color:{{ $product->stock_status === 'critical' ? '#c0392b' : ($product->stock_status === 'low' ? '#8a5a20' : '#2d5a2d') }}">
+                                {{ $product->stock_qty }} units
+                            </span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between;">
+                            <span style="color:#9a7a68;">Threshold:</span>
+                            <span>{{ $product->low_stock_threshold }} units</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between;">
+                            <span style="color:#9a7a68;">Category:</span>
+                            <span style="text-transform:uppercase; font-size:0.7rem; letter-spacing:0.04em; font-weight:700;">{{ $product->category_label }}</span>
+                        </div>
                     </div>
-                    <div class="flex justify-between">
-                        <span>Category:</span>
-                        <span>{{ $product->category_label }}</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span>Price:</span>
-                        <span>₱{{ number_format($product->selling_price, 2) }}</span>
-                    </div>
-                </div>
 
-                @if($product->stock_status === 'critical')
-                    <div class="mt-3 p-2 bg-red-50 rounded text-xs text-red-700">
-                        <strong>⚠️ Critical:</strong> Stock below 50% of threshold. Restock immediately!
-                    </div>
-                @elseif($product->stock_status === 'low')
-                    <div class="mt-3 p-2 bg-yellow-50 rounded text-xs text-yellow-700">
-                        <strong>⚠️ Low Stock:</strong> Consider restocking soon.
-                    </div>
-                @endif
+                    @if($product->stock_status === 'critical')
+                        <div style="margin-top:1rem; padding:0.6rem; background:#fdf0f0; border-radius:8px; font-size:0.7rem; color:#8a2020; border:1px solid rgba(192,57,43,0.1);">
+                            <strong>⚠️ Critical:</strong> Stock below 50% of threshold.
+                        </div>
+                    @elseif($product->stock_status === 'low')
+                        <div style="margin-top:1rem; padding:0.6rem; background:#fff8e8; border-radius:8px; font-size:0.7rem; color:#8a5a10; border:1px solid rgba(212,168,71,0.1);">
+                            <strong>⚠️ Low Stock:</strong> Consider restocking soon.
+                        </div>
+                    @endif
+                </div>
             </div>
         @endforeach
     </div>
 
     <!-- Pagination -->
-    <div class="bg-white rounded-lg shadow px-4 py-3">
+    <div style="margin-bottom:1.75rem;">
         {{ $products->links() }}
     </div>
 
     <!-- Recent Stock Movements -->
-    <div class="bg-white rounded-lg shadow p-6 mt-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Stock Movements</h3>
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reason</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">By</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">When</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    @foreach($recentMovements as $movement)
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title">📋 Recent Stock Movements</span>
+        </div>
+        <div class="p-0">
+            <div class="overflow-x-auto">
+                <table class="data-table">
+                    <thead>
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                {{ $movement->product->name }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                    {{ $movement->type === 'in' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                    {{ strtoupper($movement->type) }}
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                {{ $movement->type === 'in' ? '+' : '-' }}{{ $movement->qty }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $movement->reason }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $movement->createdBy->name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $movement->created_at->diffForHumans() }}</td>
+                            <th>Product</th>
+                            <th>Type</th>
+                            <th>Qty</th>
+                            <th>Reason</th>
+                            <th>By</th>
+                            <th>When</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach($recentMovements as $movement)
+                            <tr>
+                                <td style="font-weight:700;">{{ $movement->product->name }}</td>
+                                <td>
+                                    <span class="badge {{ $movement->type === 'in' ? 'badge-in' : 'badge-out' }}">
+                                        {{ strtoupper($movement->type) }}
+                                    </span>
+                                </td>
+                                <td style="font-weight:700; color:{{ $movement->type === 'in' ? '#2d6a2d' : '#8a2020' }}">
+                                    {{ $movement->type === 'in' ? '+' : '-' }}{{ $movement->qty }}
+                                </td>
+                                <td>{{ ucfirst($movement->reason) }}</td>
+                                <td>{{ $movement->createdBy->name }}</td>
+                                <td style="color:#9a7a68; font-size:0.75rem;">{{ $movement->created_at->diffForHumans() }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
+

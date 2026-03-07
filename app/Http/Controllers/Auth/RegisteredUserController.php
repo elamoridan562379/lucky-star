@@ -45,6 +45,19 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        $role = $user->role ?? 'cashier';
+
+        // Manager/Admin -> Manager dashboard
+        if (in_array($role, ['manager', 'admin'], true)) {
+            return redirect()->route('dashboard');
+        }
+
+        // Inventory Clerk -> Inventory dashboard
+        if ($role === 'inventory_clerk') {
+            return redirect()->route('inventory.dashboard');
+        }
+
+        // Cashier -> POS
+        return redirect()->route('pos');
     }
 }

@@ -28,7 +28,7 @@ class UserManager extends Component
             'name'     => 'required|string|max:200',
             'email'    => "required|email|{$unique}",
             'password' => $this->editId ? 'nullable|min:8' : 'required|min:8',
-            'role'     => 'required|in:cashier,manager',
+            'role'     => 'required|in:cashier,manager,inventory_clerk,admin',
         ];
     }
 

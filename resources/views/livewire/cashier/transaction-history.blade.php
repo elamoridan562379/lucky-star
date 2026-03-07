@@ -1,31 +1,17 @@
-<div style="
+<div @if(auth()->user()->isCashier()) style="
     min-height: calc(100vh - 53px);
     padding: 2rem 1.5rem;
-    background: #f0e8d8;  /* ✅ latte background */
-">
+    background: #f0e8d8;
+" @endif>
 
     <div style="max-width:1100px; margin:0 auto;">
 
         <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:1.25rem;">
             <div style="display:flex; align-items:flex-start; gap:.9rem;">
-                <a href="javascript:history.back()"
-                   style="
-                        display:inline-flex; align-items:center; gap:.55rem;
-                        padding:.55rem .95rem;
-                        border-radius:12px;
-                        border:1px solid rgba(74,37,24,0.14);
-                        background:#fff;
-                        color:#4a2518;
-                        font-weight:900;
-                        letter-spacing:.05em;
-                        text-decoration:none;
-                        box-shadow:0 2px 10px rgba(45,24,16,.06);
-                   ">
-                    ← Back
-                </a>
+
 
                 <div>
-                    <h1 style="font-family:'Playfair Display',serif; font-size:1.85rem; font-weight:900; color:#2d1810; margin:0;">
+                    <h1 class="page-title" style="margin:0;">
                         Transaction History
                     </h1>
                     <div style="margin-top:.25rem; font-size:.9rem; color:#9a7a68;">
