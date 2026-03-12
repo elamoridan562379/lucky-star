@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lucky Star — {{ $title ?? 'POS' }}</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
+
     <style>
         :root {
             --espresso:   #1a0f0a;
@@ -42,6 +45,7 @@
             opacity: 0.35;
         }
 
+        /* NAV */
         .nav-bar {
             background: linear-gradient(135deg, var(--roast) 0%, var(--espresso) 100%);
             border-bottom: 1px solid rgba(200,129,58,0.2);
@@ -49,28 +53,31 @@
         }
         .nav-logo {
             font-family: 'Playfair Display', serif;
-            font-size: 1.25rem;
+            font-size: 1.45rem; /* bigger */
             letter-spacing: 0.02em;
             color: var(--caramel);
         }
         .nav-link {
-            font-size: 0.78rem;
+            font-size: 0.9rem; /* bigger */
             letter-spacing: 0.08em;
             text-transform: uppercase;
             color: rgba(245,234,216,0.6);
             transition: color 0.2s;
             text-decoration: none;
+            background: none;
+            border: none;
+            cursor: pointer;
         }
         .nav-link:hover, .nav-link.active { color: var(--caramel); }
 
         /* Category tabs */
         .cat-tab {
             font-family: 'Lato', sans-serif;
-            font-weight: 700;
-            font-size: 0.72rem;
+            font-weight: 800;
+            font-size: 0.86rem; /* bigger */
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            padding: 0.6rem 1.4rem;
+            padding: 0.7rem 1.55rem; /* bigger */
             border-radius: 2rem;
             border: 1px solid rgba(200,129,58,0.25);
             transition: all 0.2s;
@@ -86,12 +93,27 @@
             box-shadow: 0 4px 15px rgba(200,129,58,0.35);
         }
 
+        /* Search */
+        .search-input {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(200,129,58,0.2);
+            border-radius: 20px;
+            padding: 0.55rem 1.05rem 0.55rem 2.35rem; /* bigger */
+            font-size: 0.9rem; /* bigger */
+            color: var(--cream);
+            outline: none;
+            transition: border-color 0.2s;
+            width: 260px; /* bigger */
+        }
+        .search-input:focus { border-color: rgba(200,129,58,0.5); }
+        .search-input::placeholder { color: rgba(245,234,216,0.3); }
+
         /* Product cards */
         .product-card {
             background: linear-gradient(145deg, var(--roast), var(--mahogany));
             border: 1px solid rgba(200,129,58,0.15);
             border-radius: 14px;
-            padding: 1.1rem;
+            padding: 1.25rem; /* bigger */
             cursor: pointer;
             transition: all 0.2s ease;
             text-align: left;
@@ -117,34 +139,35 @@
             filter: grayscale(0.5);
         }
         .product-card.out-of-stock:hover { transform: none; }
+
         .product-name {
             font-family: 'Playfair Display', serif;
-            font-size: 0.95rem;
-            font-weight: 600;
+            font-size: 1.15rem; /* bigger */
+            font-weight: 700;
             color: var(--cream);
-            line-height: 1.3;
-            margin-bottom: 0.3rem;
+            line-height: 1.25;
+            margin-bottom: 0.35rem;
         }
         .product-price {
-            font-weight: 700;
-            font-size: 1.05rem;
+            font-weight: 800;
+            font-size: 1.25rem; /* bigger */
             color: var(--caramel);
             letter-spacing: 0.02em;
         }
         .product-stock {
-            font-size: 0.65rem;
+            font-size: 0.78rem; /* bigger */
             letter-spacing: 0.06em;
             text-transform: uppercase;
-            color: rgba(245,234,216,0.4);
-            margin-top: 0.4rem;
+            color: rgba(245,234,216,0.45);
+            margin-top: 0.5rem;
         }
         .stock-low { color: #e07a3a; }
         .stock-out {
-            font-size: 0.6rem;
+            font-size: 0.72rem; /* bigger */
             background: rgba(200,60,60,0.2);
             color: #e05252;
-            padding: 0.15rem 0.4rem;
-            border-radius: 3px;
+            padding: 0.2rem 0.45rem;
+            border-radius: 5px;
             border: 1px solid rgba(200,60,60,0.3);
         }
 
@@ -161,24 +184,25 @@
         }
         .cart-title {
             font-family: 'Playfair Display', serif;
-            font-size: 1rem;
+            font-size: 1.15rem; /* bigger */
             color: var(--caramel);
             letter-spacing: 0.03em;
         }
         .cart-item-name {
-            font-size: 0.8rem;
-            font-weight: 700;
+            font-size: 0.95rem; /* bigger */
+            font-weight: 800;
             color: var(--latte);
         }
-        .cart-item-price { font-size: 0.72rem; color: var(--caramel); }
+        .cart-item-price { font-size: 0.85rem; color: var(--caramel); }
+
         .qty-btn {
-            width: 26px; height: 26px;
+            width: 32px; height: 32px; /* bigger */
             border-radius: 50%;
             background: rgba(255,255,255,0.06);
             border: 1px solid rgba(200,129,58,0.2);
             color: var(--latte);
-            font-size: 0.9rem;
-            font-weight: 700;
+            font-size: 1.05rem; /* bigger */
+            font-weight: 800;
             cursor: pointer;
             display: flex; align-items: center; justify-content: center;
             transition: all 0.15s;
@@ -190,10 +214,10 @@
             width: 100%;
             background: rgba(0,0,0,0.3);
             border: 1px solid rgba(200,129,58,0.3);
-            border-radius: 8px;
-            padding: 0.6rem 0.9rem;
-            font-size: 1.1rem;
-            font-weight: 700;
+            border-radius: 10px;
+            padding: 0.75rem 1rem;  /* bigger */
+            font-size: 1.25rem;      /* bigger */
+            font-weight: 900;
             color: var(--cream);
             letter-spacing: 0.04em;
             outline: none;
@@ -205,11 +229,11 @@
         /* Confirm button */
         .btn-confirm {
             width: 100%;
-            padding: 0.85rem;
-            border-radius: 10px;
+            padding: 1rem;           /* bigger */
+            border-radius: 12px;
             font-family: 'Lato', sans-serif;
-            font-weight: 700;
-            font-size: 0.85rem;
+            font-weight: 900;
+            font-size: 0.95rem;      /* bigger */
             letter-spacing: 0.1em;
             text-transform: uppercase;
             background: linear-gradient(135deg, #c8813a, #d4a847);
@@ -232,21 +256,6 @@
         /* Dividers */
         .cart-divider { border: none; border-top: 1px dashed rgba(200,129,58,0.2); }
 
-        /* Search */
-        .search-input {
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(200,129,58,0.2);
-            border-radius: 20px;
-            padding: 0.45rem 0.9rem 0.45rem 2.1rem;
-            font-size: 0.78rem;
-            color: var(--cream);
-            outline: none;
-            transition: border-color 0.2s;
-            width: 200px;
-        }
-        .search-input:focus { border-color: rgba(200,129,58,0.5); }
-        .search-input::placeholder { color: rgba(245,234,216,0.3); }
-
         /* Receipt modal */
         .receipt-modal-bg { background: rgba(10,5,3,0.85); backdrop-filter: blur(4px); }
         .receipt-card {
@@ -255,7 +264,7 @@
             border-radius: 16px;
             overflow: hidden;
             box-shadow: 0 25px 60px rgba(0,0,0,0.6);
-            max-width: 360px;
+            max-width: 380px;
             width: 100%;
         }
         .receipt-header {
@@ -265,53 +274,58 @@
         }
         .receipt-logo {
             font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
+            font-size: 1.45rem;
             color: var(--caramel);
             display: block;
             margin-bottom: 0.25rem;
         }
-        .receipt-sub { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(200,129,58,0.6); }
-        .receipt-body { padding: 1.25rem 1.5rem; font-family: 'Courier New', monospace; font-size: 0.78rem; }
-        .receipt-row { display: flex; justify-content: space-between; margin-bottom: 0.3rem; }
+        .receipt-sub { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(200,129,58,0.6); }
+        .receipt-body { padding: 1.25rem 1.5rem; font-family: 'Courier New', monospace; font-size: 0.8rem; }
+        .receipt-row { display: flex; justify-content: space-between; margin-bottom: 0.35rem; }
         .receipt-label { color: #7a5c44; }
         .receipt-dashed { border: none; border-top: 1px dashed #d4b896; margin: 0.75rem 0; }
-        .receipt-total { font-size: 0.95rem; font-weight: 700; color: var(--mahogany); }
-        .receipt-change { color: #2d6a2d; font-weight: 700; }
+        .receipt-total { font-size: 1rem; font-weight: 900; color: var(--mahogany); }
+        .receipt-change { color: #2d6a2d; font-weight: 900; }
+
         .btn-print {
-            flex: 1; padding: 0.7rem;
+            flex: 1; padding: 0.8rem;
             background: var(--mahogany); color: var(--cream);
-            border: none; border-radius: 8px;
-            font-weight: 700; font-size: 0.78rem;
+            border: none; border-radius: 10px;
+            font-weight: 900; font-size: 0.82rem;
             letter-spacing: 0.06em; text-transform: uppercase;
             cursor: pointer; transition: background 0.2s;
         }
         .btn-print:hover { background: var(--espresso); }
         .btn-new-sale {
-            flex: 1; padding: 0.7rem;
+            flex: 1; padding: 0.8rem;
             background: linear-gradient(135deg, #c8813a, #d4a847);
-            color: var(--espresso); border: none; border-radius: 8px;
-            font-weight: 700; font-size: 0.78rem;
+            color: var(--espresso); border: none; border-radius: 10px;
+            font-weight: 900; font-size: 0.82rem;
             letter-spacing: 0.06em; text-transform: uppercase;
             cursor: pointer; transition: all 0.2s;
         }
-        .btn-new-sale:hover { opacity: 0.9; }
+        .btn-new-sale:hover { opacity: 0.92; }
 
         /* Error bar */
         .error-bar {
             background: rgba(180,40,40,0.15);
             border-bottom: 1px solid rgba(200,60,60,0.25);
             color: #e07070;
-            font-size: 0.78rem;
-            padding: 0.6rem 1.25rem;
+            font-size: 0.9rem; /* bigger */
+            padding: 0.75rem 1.25rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
         /* Scrollbar */
-        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
-        ::-webkit-scrollbar-thumb { background: rgba(200,129,58,0.3); border-radius: 2px; }
+        ::-webkit-scrollbar-thumb { background: rgba(200,129,58,0.3); border-radius: 3px; }
+
+        @media (max-width: 1100px){
+            .search-input { width: 200px; }
+        }
 
         @media print {
             .no-print { display: none !important; }
@@ -327,23 +341,27 @@
     <div class="px-5 py-3 flex items-center justify-between">
         <div class="flex items-center gap-4">
             <div class="nav-logo">✦ Lucky Star</div>
-            <span style="color:rgba(200,129,58,0.3); font-size:0.7rem">|</span>
-            <span style="font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(245,234,216,0.35)">Coffee Shop</span>
+            <span style="color:rgba(200,129,58,0.3); font-size:0.85rem">|</span>
+            <span style="font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(245,234,216,0.45)">Coffee Shop</span>
         </div>
-        <div class="flex items-center gap-5">
+
+        <div class="flex items-center gap-6">
             <a href="{{ route('pos') }}" class="nav-link {{ request()->routeIs('pos') ? 'active' : '' }}">POS Terminal</a>
             <a href="{{ route('transactions.index') }}" class="nav-link {{ request()->routeIs('transactions.*') ? 'active' : '' }}">History</a>
-            <span style="color:rgba(200,129,58,0.2)">|</span>
-            <span style="font-size:0.75rem; color:rgba(245,234,216,0.4)">{{ auth()->user()->name }}</span>
+            <span style="color:rgba(200,129,58,0.2); font-size:0.9rem">|</span>
+            <span style="font-size:0.9rem; color:rgba(245,234,216,0.55)">{{ auth()->user()->name }}</span>
+
             <form method="POST" action="{{ route('logout') }}" style="display:inline">
                 @csrf
-                <button type="submit" class="nav-link" style="background:none; border:none; cursor:pointer;">Sign out</button>
+                <button type="submit" class="nav-link">Sign out</button>
             </form>
         </div>
     </div>
 </nav>
 
-<main>{{ $slot }}</main>
+<main>
+    {{ $slot }}
+</main>
 
 @livewireScripts
 @stack('scripts')

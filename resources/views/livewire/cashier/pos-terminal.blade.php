@@ -47,7 +47,7 @@
                         <span style="font-size:0.85rem; font-family:'Playfair Display',serif;">No items on the menu</span>
                     </div>
                 @else
-                <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); gap:0.9rem;">
+                <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(210px, 1fr)); gap:1rem;">
                     @foreach ($this->products as $product)
                     <button wire:click="addToCart({{ $product->id }})"
                         wire:key="prod-{{ $product->id }}"
@@ -90,7 +90,7 @@
         </div>
 
         {{-- RIGHT PANEL --}}
-        <div class="cart-panel no-print" style="width:300px; display:flex; flex-direction:column; flex-shrink:0;">
+        <div class="cart-panel no-print" style="width:360px; display:flex; flex-direction:column; flex-shrink:0;">
 
             <div class="cart-header" style="display:flex; align-items:center; justify-content:space-between;">
                 <div style="display:flex; align-items:center; gap:0.65rem;">
