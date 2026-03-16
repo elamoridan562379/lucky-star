@@ -131,16 +131,21 @@
             margin-left: var(--sidebar-w);
             flex: 1;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         .page-area {
             padding: 2rem 2.25rem;
-            max-width: 1200px;
+            width: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Page title */
         .page-title {
             font-family: 'Playfair Display', serif;
-            font-size: 1.75rem;
+            font-size: clamp(1.5rem, 2.5vw, 2.25rem);
             font-weight: 700;
             color: var(--roast);
             margin-bottom: 1.5rem;
@@ -164,7 +169,7 @@
         }
         .card-title {
             font-family: 'Playfair Display', serif;
-            font-size: 0.95rem;
+            font-size: clamp(0.85rem, 1.2vw, 1.1rem);
             font-weight: 600;
             color: var(--roast);
         }
@@ -189,16 +194,16 @@
         .kpi-roast::after { background: linear-gradient(90deg, var(--roast), var(--mahogany)); }
         .kpi-moss::after  { background: linear-gradient(90deg, #3d7a3d, #5a9e5a); }
         .kpi-red::after   { background: linear-gradient(90deg, #c0392b, #e05252); }
-        .kpi-label { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: #9a7a68; margin-bottom: 0.5rem; }
-        .kpi-value { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 700; color: var(--roast); line-height: 1; }
-        .kpi-sub { font-size: 0.68rem; color: #a08070; margin-top: 0.35rem; }
+        .kpi-label { font-size: clamp(0.6rem, 0.8vw, 0.7rem); letter-spacing: 0.1em; text-transform: uppercase; color: #9a7a68; margin-bottom: 0.5rem; }
+        .kpi-value { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 2.2vw, 2.2rem); font-weight: 700; color: var(--roast); line-height: 1; }
+        .kpi-sub { font-size: clamp(0.6rem, 0.9vw, 0.75rem); color: #a08070; margin-top: 0.35rem; }
 
         /* Tables */
-        .data-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+        .data-table { width: 100%; border-collapse: collapse; font-size: clamp(0.75rem, 1vw, 0.9rem); }
         .data-table th {
             padding: 0.65rem 1rem;
             text-align: left;
-            font-size: 0.65rem;
+            font-size: clamp(0.6rem, 0.8vw, 0.7rem);
             font-weight: 700;
             letter-spacing: 0.08em;
             text-transform: uppercase;
@@ -207,7 +212,7 @@
             border-bottom: 1px solid rgba(74,37,24,0.1);
         }
         .data-table td {
-            padding: 0.7rem 1rem;
+            padding: clamp(0.6rem, 0.8vw, 0.7rem) 1rem;
             border-bottom: 1px solid rgba(74,37,24,0.06);
             color: #3d2415;
             vertical-align: middle;
@@ -221,7 +226,7 @@
             align-items: center;
             padding: 0.2rem 0.55rem;
             border-radius: 20px;
-            font-size: 0.65rem;
+            font-size: clamp(0.6rem, 0.8vw, 0.7rem);
             font-weight: 700;
             letter-spacing: 0.05em;
             text-transform: uppercase;
@@ -242,7 +247,7 @@
             padding: 0.55rem 1.25rem;
             border-radius: 8px;
             font-weight: 700;
-            font-size: 0.78rem;
+            font-size: clamp(0.7rem, 0.9vw, 0.85rem);
             letter-spacing: 0.06em;
             text-transform: uppercase;
             cursor: pointer;
@@ -257,7 +262,7 @@
             padding: 0.55rem 1.1rem;
             border-radius: 8px;
             font-weight: 700;
-            font-size: 0.78rem;
+            font-size: clamp(0.7rem, 0.9vw, 0.85rem);
             cursor: pointer;
             transition: all 0.15s;
         }
@@ -269,12 +274,12 @@
             padding: 0.55rem 1.1rem;
             border-radius: 8px;
             font-weight: 700;
-            font-size: 0.78rem;
+            font-size: clamp(0.7rem, 0.9vw, 0.85rem);
             cursor: pointer;
             transition: all 0.15s;
         }
         .btn-danger:hover { background: #fde8e8; }
-        .btn-link { background: none; border: none; color: var(--caramel); font-size: 0.78rem; font-weight: 700; cursor: pointer; letter-spacing: 0.04em; }
+        .btn-link { background: none; border: none; color: var(--caramel); font-size: clamp(0.7rem, 0.9vw, 0.85rem); font-weight: 700; cursor: pointer; letter-spacing: 0.04em; }
         .btn-link:hover { color: var(--mahogany); text-decoration: underline; }
 
         /* Form inputs */
@@ -283,7 +288,7 @@
             border: 1px solid rgba(74,37,24,0.2);
             border-radius: 8px;
             padding: 0.55rem 0.85rem;
-            font-size: 0.82rem;
+            font-size: clamp(0.75rem, 1vw, 0.9rem);
             font-family: 'Lato', sans-serif;
             color: var(--roast);
             background: white;
@@ -294,8 +299,8 @@
             border-color: var(--caramel);
             box-shadow: 0 0 0 3px rgba(200,129,58,0.1);
         }
-        .form-label { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #7a5c44; margin-bottom: 0.35rem; }
-        .form-error { font-size: 0.7rem; color: #c0392b; margin-top: 0.25rem; }
+        .form-label { display: block; font-size: clamp(0.65rem, 0.85vw, 0.75rem); font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #7a5c44; margin-bottom: 0.35rem; }
+        .form-error { font-size: clamp(0.6rem, 0.8vw, 0.7rem); color: #c0392b; margin-top: 0.25rem; }
 
         /* Alerts */
         .alert-success { background: #f0faf0; border: 1px solid #b8d8b8; color: #2d5a2d; border-radius: 10px; padding: 0.75rem 1rem; font-size: 0.82rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }

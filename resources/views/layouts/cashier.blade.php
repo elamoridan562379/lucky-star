@@ -31,6 +31,8 @@
             background: var(--espresso);
             color: var(--cream);
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         .font-display { font-family: 'Playfair Display', serif; }
 
@@ -53,12 +55,12 @@
         }
         .nav-logo {
             font-family: 'Playfair Display', serif;
-            font-size: 1.45rem; /* bigger */
+            font-size: clamp(1.2rem, 1.8vw, 1.6rem);
             letter-spacing: 0.02em;
             color: var(--caramel);
         }
         .nav-link {
-            font-size: 0.9rem; /* bigger */
+            font-size: clamp(0.8rem, 1.1vw, 1rem);
             letter-spacing: 0.08em;
             text-transform: uppercase;
             color: rgba(245,234,216,0.6);
@@ -74,10 +76,10 @@
         .cat-tab {
             font-family: 'Lato', sans-serif;
             font-weight: 800;
-            font-size: 0.86rem; /* bigger */
+            font-size: clamp(0.75rem, 1vw, 0.9rem);
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            padding: 0.7rem 1.55rem; /* bigger */
+            padding: clamp(0.6rem, 0.8vw, 0.7rem) clamp(1.2rem, 1.6vw, 1.5rem);
             border-radius: 2rem;
             border: 1px solid rgba(200,129,58,0.25);
             transition: all 0.2s;
@@ -98,12 +100,12 @@
             background: rgba(0,0,0,0.3);
             border: 1px solid rgba(200,129,58,0.2);
             border-radius: 20px;
-            padding: 0.55rem 1.05rem 0.55rem 2.35rem; /* bigger */
-            font-size: 0.9rem; /* bigger */
+            padding: clamp(0.5rem, 0.7vw, 0.6rem) clamp(1rem, 1.4vw, 1.2rem) clamp(0.5rem, 0.7vw, 0.6rem) clamp(2rem, 2.8vw, 2.5rem);
+            font-size: clamp(0.8rem, 1.1vw, 1rem);
             color: var(--cream);
             outline: none;
             transition: border-color 0.2s;
-            width: 260px; /* bigger */
+            width: clamp(220px, 28vw, 280px);
         }
         .search-input:focus { border-color: rgba(200,129,58,0.5); }
         .search-input::placeholder { color: rgba(245,234,216,0.3); }
@@ -113,12 +115,13 @@
             background: linear-gradient(145deg, var(--roast), var(--mahogany));
             border: 1px solid rgba(200,129,58,0.15);
             border-radius: 14px;
-            padding: 1.25rem; /* bigger */
+            padding: clamp(0.8rem, 1.2vw, 1rem);
             cursor: pointer;
             transition: all 0.2s ease;
             text-align: left;
             position: relative;
             overflow: hidden;
+            min-height: 140px;
         }
         .product-card::before {
             content: '';
@@ -142,28 +145,27 @@
 
         .product-name {
             font-family: 'Playfair Display', serif;
-            font-size: 1.15rem; /* bigger */
+            font-size: clamp(0.9rem, 1.3vw, 1.1rem);
             font-weight: 700;
             color: var(--cream);
-            line-height: 1.25;
-            margin-bottom: 0.35rem;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
         }
         .product-price {
             font-weight: 800;
-            font-size: 1.25rem; /* bigger */
+            font-size: clamp(0.95rem, 1.3vw, 1.15rem);
             color: var(--caramel);
             letter-spacing: 0.02em;
         }
         .product-stock {
-            font-size: 0.78rem; /* bigger */
+            font-size: clamp(0.65rem, 0.85vw, 0.75rem);
             letter-spacing: 0.06em;
             text-transform: uppercase;
             color: rgba(245,234,216,0.45);
             margin-top: 0.5rem;
         }
-        .stock-low { color: #e07a3a; }
         .stock-out {
-            font-size: 0.72rem; /* bigger */
+            font-size: clamp(0.6rem, 0.8vw, 0.7rem);
             background: rgba(200,60,60,0.2);
             color: #e05252;
             padding: 0.2rem 0.45rem;
@@ -184,24 +186,24 @@
         }
         .cart-title {
             font-family: 'Playfair Display', serif;
-            font-size: 1.15rem; /* bigger */
+            font-size: clamp(1rem, 1.4vw, 1.3rem);
             color: var(--caramel);
             letter-spacing: 0.03em;
         }
         .cart-item-name {
-            font-size: 0.95rem; /* bigger */
+            font-size: clamp(0.85rem, 1.1vw, 1rem);
             font-weight: 800;
             color: var(--latte);
         }
-        .cart-item-price { font-size: 0.85rem; color: var(--caramel); }
+        .cart-item-price { font-size: clamp(0.75rem, 1vw, 0.9rem); color: var(--caramel); }
 
         .qty-btn {
-            width: 32px; height: 32px; /* bigger */
+            width: clamp(28px, 3.5vw, 32px); height: clamp(28px, 3.5vw, 32px);
             border-radius: 50%;
             background: rgba(255,255,255,0.06);
             border: 1px solid rgba(200,129,58,0.2);
             color: var(--latte);
-            font-size: 1.05rem; /* bigger */
+            font-size: clamp(0.9rem, 1.3vw, 1.2rem);
             font-weight: 800;
             cursor: pointer;
             display: flex; align-items: center; justify-content: center;
@@ -215,8 +217,8 @@
             background: rgba(0,0,0,0.3);
             border: 1px solid rgba(200,129,58,0.3);
             border-radius: 10px;
-            padding: 0.75rem 1rem;  /* bigger */
-            font-size: 1.25rem;      /* bigger */
+            padding: clamp(0.6rem, 0.8vw, 0.7rem) clamp(0.8rem, 1.1vw, 1rem);
+            font-size: clamp(1.1rem, 1.5vw, 1.4rem);
             font-weight: 900;
             color: var(--cream);
             letter-spacing: 0.04em;
@@ -229,11 +231,11 @@
         /* Confirm button */
         .btn-confirm {
             width: 100%;
-            padding: 1rem;           /* bigger */
+            padding: clamp(0.8rem, 1.1vw, 1rem);
             border-radius: 12px;
             font-family: 'Lato', sans-serif;
             font-weight: 900;
-            font-size: 0.95rem;      /* bigger */
+            font-size: clamp(0.85rem, 1.1vw, 1rem);
             letter-spacing: 0.1em;
             text-transform: uppercase;
             background: linear-gradient(135deg, #c8813a, #d4a847);
@@ -274,13 +276,13 @@
         }
         .receipt-logo {
             font-family: 'Playfair Display', serif;
-            font-size: 1.45rem;
+            font-size: clamp(1.2rem, 1.8vw, 1.6rem);
             color: var(--caramel);
             display: block;
             margin-bottom: 0.25rem;
         }
-        .receipt-sub { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(200,129,58,0.6); }
-        .receipt-body { padding: 1.25rem 1.5rem; font-family: 'Courier New', monospace; font-size: 0.8rem; }
+        .receipt-sub { font-size: clamp(0.65rem, 0.8vw, 0.75rem); letter-spacing: 0.12em; text-transform: uppercase; color: rgba(200,129,58,0.6); }
+        .receipt-body { padding: 1.25rem 1.5rem; font-family: 'Courier New', monospace; font-size: clamp(0.7rem, 0.9vw, 0.8rem); }
         .receipt-row { display: flex; justify-content: space-between; margin-bottom: 0.35rem; }
         .receipt-label { color: #7a5c44; }
         .receipt-dashed { border: none; border-top: 1px dashed #d4b896; margin: 0.75rem 0; }
@@ -288,19 +290,18 @@
         .receipt-change { color: #2d6a2d; font-weight: 900; }
 
         .btn-print {
-            flex: 1; padding: 0.8rem;
+            flex: 1; padding: clamp(0.7rem, 0.9vw, 0.8rem);
             background: var(--mahogany); color: var(--cream);
             border: none; border-radius: 10px;
-            font-weight: 900; font-size: 0.82rem;
+            font-weight: 900; font-size: clamp(0.75rem, 1vw, 0.9rem);
             letter-spacing: 0.06em; text-transform: uppercase;
             cursor: pointer; transition: background 0.2s;
         }
-        .btn-print:hover { background: var(--espresso); }
         .btn-new-sale {
-            flex: 1; padding: 0.8rem;
+            flex: 1; padding: clamp(0.7rem, 0.9vw, 0.8rem);
             background: linear-gradient(135deg, #c8813a, #d4a847);
             color: var(--espresso); border: none; border-radius: 10px;
-            font-weight: 900; font-size: 0.82rem;
+            font-weight: 900; font-size: clamp(0.75rem, 1vw, 0.9rem);
             letter-spacing: 0.06em; text-transform: uppercase;
             cursor: pointer; transition: all 0.2s;
         }
@@ -311,7 +312,7 @@
             background: rgba(180,40,40,0.15);
             border-bottom: 1px solid rgba(200,60,60,0.25);
             color: #e07070;
-            font-size: 0.9rem; /* bigger */
+            font-size: clamp(0.8rem, 1.1vw, 1rem);
             padding: 0.75rem 1.25rem;
             display: flex;
             align-items: center;
@@ -323,8 +324,12 @@
         ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
         ::-webkit-scrollbar-thumb { background: rgba(200,129,58,0.3); border-radius: 3px; }
 
-        @media (max-width: 1100px){
-            .search-input { width: 200px; }
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            width: 100%;
         }
 
         @media print {

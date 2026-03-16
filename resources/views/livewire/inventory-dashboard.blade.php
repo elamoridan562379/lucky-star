@@ -1,6 +1,6 @@
-<div>
+<div class="dashboard-container" style="display: flex; flex-direction: column; min-height: 100%; flex: 1;">
     <!-- Header -->
-    <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:1.75rem; flex-wrap:wrap; gap:1rem;">
+    <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:1.75rem; flex-wrap:wrap; gap:1rem; flex-shrink: 0;">
         <h1 class="page-title" style="margin-bottom:0;">Inventory Overview</h1>
         <span style="font-size:0.72rem; color:#9a7a68; letter-spacing:0.06em; text-transform:uppercase; font-family:'Lato',sans-serif;">
             {{ now()->format('l, F j Y') }}
@@ -8,7 +8,7 @@
     </div>
 
     <!-- Header Stats -->
-    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; margin-bottom:1.75rem;">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:1rem; margin-bottom:1.75rem; flex-shrink: 0; width: 100%;">
         <div class="kpi-card kpi-roast">
             <div class="kpi-label">Total Products</div>
             <div class="kpi-value">{{ $totalProducts }}</div>
@@ -35,7 +35,7 @@
     </div>
 
     <!-- Filters -->
-    <div class="card mb-6">
+    <div class="card mb-6" style="flex-shrink: 0;">
         <div class="card-header">
             <span class="card-title">🔍 Filters & Search</span>
             <button wire:click="refreshStats" class="btn-secondary" style="padding: 0.35rem 0.8rem; font-size: 0.7rem;">Refresh</button>
@@ -65,7 +65,7 @@
     </div>
 
     <!-- Products Grid -->
-    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1.25rem; margin-bottom:1.75rem;">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(350px, 1fr)); gap:1.25rem; margin-bottom:1.75rem; flex: 1; min-height: 0; width: 100%;">
         @foreach($products as $product)
             <div class="card" style="border-left: 4px solid {{ $product->stock_status === 'critical' ? '#c0392b' : ($product->stock_status === 'low' ? '#d4a847' : '#3d7a3d') }}">
                 <div class="p-4">
@@ -108,12 +108,12 @@
     </div>
 
     <!-- Pagination -->
-    <div style="margin-bottom:1.75rem;">
+    <div style="margin-bottom:1.75rem; flex-shrink: 0;">
         {{ $products->links() }}
     </div>
 
     <!-- Recent Stock Movements -->
-    <div class="card">
+    <div class="card" style="flex-shrink: 0;">
         <div class="card-header">
             <span class="card-title">📋 Recent Stock Movements</span>
         </div>

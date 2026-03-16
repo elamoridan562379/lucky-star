@@ -47,31 +47,36 @@
                         <span style="font-size:0.85rem; font-family:'Playfair Display',serif;">No items on the menu</span>
                     </div>
                 @else
-                <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(210px, 1fr)); gap:1rem;">
+                <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:1rem; width: 100%;">
                     @foreach ($this->products as $product)
                     <button wire:click="addToCart({{ $product->id }})"
                         wire:key="prod-{{ $product->id }}"
                         class="product-card {{ $product->stock_qty < 1 ? 'out-of-stock' : '' }}"
-                        {{ $product->stock_qty < 1 ? 'disabled' : '' }}>
+                        {{ $product->stock_qty < 1 ? 'disabled' : '' }}
+                        style="display: flex; flex-direction: column; height: 100%;">
 
-                        <div style="font-size:1.6rem; margin-bottom:0.5rem; line-height:1;">
+                        <div style="font-size:1.4rem; margin-bottom:0.4rem; line-height:1; text-align: center;">
                             @if($product->category === 'coffee') ☕
                             @elseif($product->category === 'iced_coffee') 🧊
                             @else 🥤
                             @endif
                         </div>
 
-                        <div class="product-name">{{ $product->name }}</div>
-                        <div class="product-price">₱{{ number_format($product->selling_price, 2) }}</div>
-
-                        <div class="product-stock">
-                            @if ($product->stock_qty < 1)
-                                <span class="stock-out">Out of stock</span>
-                            @elseif ($product->isLowStock())
-                                <span class="stock-low">⚑ {{ $product->stock_qty }} left</span>
-                            @else
-                                {{ $product->stock_qty }} in stock
-                            @endif
+                        <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; min-height: 0;">
+                            <div class="product-name" style="text-align: center; margin-bottom: 0.5rem;">{{ $product->name }}</div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 0.5rem;">
+                                <div class="product-stock" style="text-align: left; flex: 1;">
+                                    @if ($product->stock_qty < 1)
+                                        <span class="stock-out">Out of stock</span>
+                                    @elseif ($product->isLowStock())
+                                        <span class="stock-low">⚑ {{ $product->stock_qty }} left</span>
+                                    @else
+                                        <span style="font-size: 0.7rem; opacity: 0.8;">{{ $product->stock_qty }} in stock</span>
+                                    @endif
+                                </div>
+                                <div class="product-price" style="text-align: right; font-weight: 800;">₱{{ number_format($product->selling_price, 2) }}</div>
+                            </div>
                         </div>
                     </button>
                     @endforeach
