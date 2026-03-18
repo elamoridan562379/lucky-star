@@ -200,11 +200,12 @@
             outline:none;
             font-size:15px;
             transition:all 0.3s ease;
-            background:rgba(255,255,255,0.8);
+            background:#fefcf8;
+            color:var(--espresso);
         }
         .form-input:focus{
             border-color:var(--caramel);
-            box-shadow:0 0 0 3px rgba(200,129,58,0.1);
+            box-shadow:0 0 0 3px rgba(200,129,58,0.15);
             transform:translateY(-1px);
         }
         .form-input:hover{
@@ -253,7 +254,7 @@
             padding:14px 16px;
             border:none;
             border-radius:14px;
-            background:linear-gradient(135deg, var(--mahogany) 0%, var(--caramel) 60%, var(--gold) 100%);
+            background:var(--caramel);
             color:#fff;
             font-weight:700;
             font-size:16px;
@@ -266,6 +267,7 @@
         .btn-primary:hover{
             transform:translateY(-2px);
             box-shadow:0 18px 40px rgba(200,129,58,.45);
+            background:var(--mahogany);
         }
         .btn-primary:active{
             transform:translateY(0);

@@ -14,7 +14,7 @@
                 id="email"
                 type="email"
                 name="email"
-                value="{{ old('email') }}"
+                autocomplete="off"
                 required
                 autofocus
                 placeholder="Enter your email"
@@ -32,6 +32,7 @@
                     id="password"
                     type="password"
                     name="password"
+                    autocomplete="new-password"
                     required
                     placeholder="Enter your password"
                     class="form-input"
@@ -63,12 +64,6 @@
             Sign In
         </button>
 
-        @if (Route::has('register'))
-            <div style="text-align:center; margin-top:14px; color:var(--roast); font-size:14px;">
-                Don't have an account?
-                <a class="link" href="{{ route('register') }}">Sign Up</a>
-            </div>
-        @endif
     </form>
 
     <script>
