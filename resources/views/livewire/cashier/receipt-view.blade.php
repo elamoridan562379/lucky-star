@@ -1,7 +1,10 @@
 <div style="
     min-height: calc(100vh - 53px);
     padding: 2rem 1.5rem;
-    background: #f0e8d8;  /* ✅ same latte */
+    background:
+        radial-gradient(circle at 20% 20%, rgba(200,129,58,.18), transparent 45%),
+        radial-gradient(circle at 80% 35%, rgba(200,129,58,.12), transparent 50%),
+        linear-gradient(180deg, #2b170f 0%, #1a0f0a 100%);
 ">
     <div style="max-width:860px; margin:0 auto;">
 
@@ -25,10 +28,10 @@
                 </button>
 
                 <div>
-                    <h1 style="font-family:'Playfair Display',serif; font-size:1.85rem; font-weight:900; color:#2d1810; margin:0;">
+                    <h1 style="font-family:'Playfair Display',serif; font-size:1.85rem; font-weight:900; color:#fef3e2; margin:0;">
                         Receipt Details
                     </h1>
-                    <div style="margin-top:.25rem; font-size:.9rem; color:#9a7a68;">
+                    <div style="margin-top:.25rem; font-size:.9rem; color:#f5e6d3;">
                         View transaction details
                     </div>
                 </div>
@@ -51,13 +54,13 @@
         </div>
 
         <div style="
-            background:#fff;
-            border:1px solid rgba(74,37,24,0.12);
+            background: rgba(255,255,255,0.96);
+            border:1px solid rgba(74,37,24,0.14);
             border-radius:18px;
             overflow:hidden;
             box-shadow:0 10px 26px rgba(45,24,16,.10);
         ">
-            <div style="padding:1.1rem 1.25rem; background:#faf5ee; border-bottom:1px solid rgba(74,37,24,0.10);">
+            <div style="padding:1.1rem 1.25rem; background:rgba(45,24,16,0.03); border-bottom:1px solid rgba(74,37,24,0.10);">
                 <div style="font-family:'Playfair Display',serif; font-weight:900; color:#c8813a; font-size:1.05rem;">
                     ✦ Lucky Star Coffee Shop
                 </div>
@@ -95,7 +98,7 @@
                 </div>
 
                 <div style="border:1px solid rgba(74,37,24,0.10); border-radius:16px; overflow:hidden;">
-                    <div style="display:flex; justify-content:space-between; padding:.75rem 1rem; background:#faf5ee; border-bottom:1px solid rgba(74,37,24,0.08);">
+                    <div style="display:flex; justify-content:space-between; padding:.75rem 1rem; background:rgba(45,24,16,0.03); border-bottom:1px solid rgba(74,37,24,0.08);">
                         <span style="font-size:.65rem; letter-spacing:.12em; text-transform:uppercase; color:#9a7a68; font-weight:900;">Item</span>
                         <span style="font-size:.65rem; letter-spacing:.12em; text-transform:uppercase; color:#9a7a68; font-weight:900;">Total</span>
                     </div>
