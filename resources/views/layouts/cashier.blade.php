@@ -14,9 +14,9 @@
 
     <style>
         :root {
-            --espresso:   #1a0f0a;
-            --roast:      #2d1810;
-            --mahogany:   #4a2518;
+            --espresso:   #2d1810;
+            --roast:      #4a2518;
+            --mahogany:   #5c3020;
             --caramel:    #c8813a;
             --cream:      #f5ead8;
             --latte:      #e8d5b7;
@@ -63,7 +63,7 @@
             font-size: clamp(0.8rem, 1.1vw, 1rem);
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            color: rgba(245,234,216,0.6);
+            color: rgba(245,234,216,0.8);
             transition: color 0.2s;
             text-decoration: none;
             background: none;
@@ -84,7 +84,7 @@
             border: 1px solid rgba(200,129,58,0.25);
             transition: all 0.2s;
             cursor: pointer;
-            color: rgba(245,234,216,0.6);
+            color: rgba(245,234,216,0.8);
             background: transparent;
         }
         .cat-tab:hover { border-color: var(--caramel); color: var(--caramel); }
@@ -108,7 +108,7 @@
             width: clamp(220px, 28vw, 280px);
         }
         .search-input:focus { border-color: rgba(200,129,58,0.5); }
-        .search-input::placeholder { color: rgba(245,234,216,0.3); }
+        .search-input::placeholder { color: rgba(245,234,216,0.5); }
 
         /* Product cards */
         .product-card {
@@ -161,7 +161,7 @@
             font-size: clamp(0.65rem, 0.85vw, 0.75rem);
             letter-spacing: 0.06em;
             text-transform: uppercase;
-            color: rgba(245,234,216,0.45);
+            color: rgba(245,234,216,0.65);
             margin-top: 0.5rem;
         }
         .stock-out {
@@ -226,7 +226,7 @@
             transition: border-color 0.2s;
         }
         .cash-input:focus { border-color: var(--caramel); box-shadow: 0 0 0 3px rgba(200,129,58,0.1); }
-        .cash-input::placeholder { color: rgba(245,234,216,0.25); }
+        .cash-input::placeholder { color: rgba(245,234,216,0.4); }
 
         /* Confirm button */
         .btn-confirm {
