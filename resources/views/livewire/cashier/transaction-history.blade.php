@@ -17,12 +17,12 @@
                 <div>
                     <h1 class="page-title" style="
                         margin:0;
-                        color: var(--roast);
+                        color: #fef3e2;
                         text-shadow: none;
                     ">
                         Transaction History
                     </h1>
-                    <div style="margin-top:.35rem; font-size:.92rem; color:var(--mahogany);">
+                    <div style="margin-top:.35rem; font-size:.92rem; color:#f5e6d3;">
                         View receipts and totals by date range.
                     </div>
                 </div>
