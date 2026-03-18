@@ -44,7 +44,7 @@
                     border-radius:12px;
                     border:1px solid rgba(200,129,58,.22);
                     background: rgba(200,129,58,.12);
-                    color:#4a2518;
+                    color:#fef3e2;
                     font-weight:900;
                     letter-spacing:.06em;
                     cursor:pointer;
