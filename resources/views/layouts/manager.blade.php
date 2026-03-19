@@ -378,7 +378,7 @@
         </a>
 
         <span class="nav-section-label">System</span>
-        <a href="{{ route('users.index') }}" class="nav-item {{ request()->routeIs('users.*') ? 'active' : '' }}">
+        <a href="{{ route('manager.users') }}" class="nav-item {{ request()->routeIs('manager.users') ? 'active' : '' }}">
             <span class="nav-icon">◎</span> Users
         </a>
     </nav>

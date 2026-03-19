@@ -39,8 +39,13 @@
                     </td>
                     <td style="text-align:center;">
                         @if ($user->id !== auth()->id())
-                            <button wire:click="openEdit({{ $user->id }})" class="btn-link">Edit</button>
-                            @if (auth()->user()->isAdmin())
+                            @if ($this->getCanEditUser($user->id))
+                                <button wire:click="openEdit({{ $user->id }})" class="btn-link">Edit</button>
+                            @else
+                                <span style="font-size:0.72rem; color:#c8b0a0;">Locked</span>
+                            @endif
+                            
+                            @if ($this->getCanDeleteUsers())
                                 <button wire:click="openDelete({{ $user->id }})" class="btn-link btn-delete" style="color:#e05252;">Delete</button>
                             @endif
                         @else
@@ -82,11 +87,9 @@
                 <div>
                     <label class="form-label">Role *</label>
                     <select wire:model="role" class="form-input">
-                        <option value="cashier">Cashier</option>
-                        <option value="inventory_clerk">Inventory Clerk</option>
-                        @if (auth()->user()->isAdmin())
-                            <option value="manager">Manager</option>
-                        @endif
+                        @foreach ($this->getAvailableRolesForCreation() as $roleKey => $roleLabel)
+                            <option value="{{ $roleKey }}">{{ $roleLabel }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div>

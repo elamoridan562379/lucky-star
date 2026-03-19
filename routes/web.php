@@ -80,6 +80,7 @@ Route::middleware(['auth', 'role:manager,admin'])
         Route::get('/inventory/stock-in', ManagerInventoryStockIn::class)->name('manager.stock-in');
         Route::get('/inventory/movements', StockMovementsTable::class)->name('manager.movements');
         Route::get('/reports/sales', SalesReport::class)->name('reports.sales');
+        Route::get('/users', UserManager::class)->name('manager.users');
     });
 
 // — Admin routes with full system access
