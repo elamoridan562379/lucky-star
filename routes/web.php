@@ -9,6 +9,7 @@ use App\Http\Livewire\Manager\InventoryStockIn as ManagerInventoryStockIn;
 use App\Http\Livewire\Manager\StockMovementsTable;
 use App\Http\Livewire\Manager\SalesReport;
 use App\Http\Livewire\Manager\UserManager;
+use App\Http\Livewire\Admin\AdminDashboard;
 use App\Http\Livewire\InventoryDashboard;
 use App\Http\Livewire\InventoryStockIn;
 use App\Http\Livewire\InventoryMovements;
@@ -34,8 +35,13 @@ Route::get('/', function (): RedirectResponse {
         return redirect()->route('inventory.dashboard');
     }
 
-    // manager/admin -> manager dashboard
-    if (in_array($role, ['manager', 'admin'], true)) {
+    // admin -> admin dashboard
+    if ($role === 'admin') {
+        return redirect()->route('admin.dashboard');
+    }
+
+    // manager -> manager dashboard
+    if ($role === 'manager') {
         return redirect()->route('dashboard');
     }
 
@@ -63,7 +69,7 @@ Route::middleware(['auth', 'role:inventory_clerk,admin'])
         Route::get('/products', InventoryProducts::class)->name('inventory.products');
     });
 
-// — Manager routes with inventory oversight
+// — Manager routes with inventory oversight (Admin also has access)
 Route::middleware(['auth', 'role:manager,admin'])
     ->prefix('manager')
     ->group(function (): void {
@@ -74,7 +80,20 @@ Route::middleware(['auth', 'role:manager,admin'])
         Route::get('/inventory/stock-in', ManagerInventoryStockIn::class)->name('manager.stock-in');
         Route::get('/inventory/movements', StockMovementsTable::class)->name('manager.movements');
         Route::get('/reports/sales', SalesReport::class)->name('reports.sales');
+    });
+
+// — Admin routes with full system access
+Route::middleware(['auth', 'role:admin'])
+    ->prefix('admin')
+    ->group(function (): void {
+        Route::get('/dashboard', AdminDashboard::class)->name('admin.dashboard');
         Route::get('/users', UserManager::class)->name('users.index');
+        Route::get('/products', ProductManager::class)->name('admin.products');
+        Route::get('/inventory', InventoryDashboard::class)->name('admin.inventory');
+        Route::get('/inventory/stock-in', ManagerInventoryStockIn::class)->name('admin.stock-in');
+        Route::get('/inventory/movements', StockMovementsTable::class)->name('admin.movements');
+        Route::get('/reports/sales', SalesReport::class)->name('admin.reports.sales');
+        Route::get('/transactions', TransactionHistory::class)->name('admin.transactions');
     });
 
 // — Shared inventory routes (All roles with inventory access)

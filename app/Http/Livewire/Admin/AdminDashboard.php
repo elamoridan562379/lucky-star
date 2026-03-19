@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Livewire\Manager;
+namespace App\Http\Livewire\Admin;
 
 use App\Services\DashboardService;
 use Livewire\Component;
 
-class DashboardOverview extends Component
+class AdminDashboard extends Component
 {
     public $weeklyRevenueData;
     public $salesByCategoryData;
@@ -46,7 +46,7 @@ class DashboardOverview extends Component
 
     public function render()
     {
-        return view('livewire.manager.dashboard-overview')
-            ->layout('layouts.manager');
+        return view('livewire.admin.admin-dashboard')
+            ->layout('layouts.admin');
     }
 }
