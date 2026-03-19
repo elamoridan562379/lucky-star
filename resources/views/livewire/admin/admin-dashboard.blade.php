@@ -3,12 +3,15 @@
     <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:1.75rem; flex-wrap:wrap; gap:1rem; flex-shrink: 0;">
         <h1 class="page-title" style="margin-bottom:0;">Good {{ now()->hour < 12 ? 'Morning' : (now()->hour < 17 ? 'Afternoon' : 'Evening') }}, {{ auth()->user()->name }}</h1>
         <div style="display:flex; align-items:center; gap:1rem;">
-            <span style="font-size:0.72rem; color:#9a7a68; letter-spacing:0.06em; text-transform:uppercase; font-family:'Lato',sans-serif;">
-                {{ now()->format('l, F j Y') }}
-            </span>
-            <button wire:click="refreshData" class="btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.7rem;">
-                🔄 Refresh
-            </button>
+            <a href="{{ route('admin.products.create') }}" class="btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.7rem; background-color: #d4af37; color: white; border: none; border-radius: 6px; cursor: pointer; text-decoration: none;">
+                <i class="fa-solid fa-plus"></i> Add Product
+            </a>
+            <a href="{{ route('admin.stock-in.create') }}" class="btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.7rem; background-color: #4a2c00; color: white; border: none; border-radius: 6px; cursor: pointer; text-decoration: none;">
+                <i class="fa-solid fa-download"></i> Stock In
+            </a>
+            <a href="{{ route('admin.reports.sales.create') }}" class="btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.7rem; background-color: #4a2c00; color: white; border: none; border-radius: 6px; cursor: pointer; text-decoration: none;">
+                <i class="fa-solid fa-file-invoice"></i> New Sale
+            </a>
         </div>
     </div>
 

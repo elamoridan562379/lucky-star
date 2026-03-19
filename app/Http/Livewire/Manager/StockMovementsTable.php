@@ -16,11 +16,51 @@ class StockMovementsTable extends Component
     public string $type = '';
     public string $reason = '';
     public ?int $productId = null;
+    public bool $showCreateModal = false;
+
+    public function openCreate(): void
+    {
+        $this->resetForm();
+        $this->showCreateModal = true;
+    }
+
+    public function save(): void
+    {
+        $this->validate([
+            'type' => 'required|in:in,out',
+            'quantity' => 'required|integer|min:1',
+            'reason' => 'required|string|max:255',
+            'product_id' => 'required|exists:products,id',
+        ]);
+
+        StockMovement::create([
+            'type' => $this->type,
+            'quantity' => $this->quantity,
+            'reason' => $this->reason,
+            'product_id' => $this->productId,
+            'created_by' => auth()->id(),
+        ]);
+
+        session()->flash('success', 'Stock movement recorded successfully.');
+        $this->showCreateModal = false;
+        $this->resetForm();
+    }
+
+    public function resetForm(): void
+    {
+        $this->dateFrom = '';
+        $this->dateTo = '';
+        $this->type = '';
+        $this->reason = '';
+        $this->productId = null;
+        $this->quantity = '';
+        $this->cleared = false;
+        $this->resetValidation();
+    }
 
     // ✅ when true, show empty table (after pressing Clear)
     public bool $cleared = false;
 
-    // keep filters in URL
     protected $queryString = [
         'dateFrom',
         'dateTo',
@@ -28,6 +68,16 @@ class StockMovementsTable extends Component
         'reason',
         'productId',
     ];
+
+    protected function rules(): array
+    {
+        return [
+            'type' => 'required|in:in,out',
+            'quantity' => 'required|integer|min:1',
+            'reason' => 'required|string|max:255',
+            'product_id' => 'required|exists:products,id',
+        ];
+    }
 
     public function mount(): void
     {
@@ -46,12 +96,12 @@ class StockMovementsTable extends Component
     // ✅ Clear = blank inputs + empty table
     public function clearFilters(): void
     {
-        $this->dateFrom  = '';
-        $this->dateTo    = '';
-        $this->type      = '';
-        $this->reason    = '';
+        $this->dateFrom = '';
+        $this->dateTo = '';
+        $this->type = '';
+        $this->reason = '';
         $this->productId = null;
-
+        $this->quantity = '';
         $this->cleared = true;
         $this->resetPage();
     }

@@ -77,9 +77,12 @@ Route::middleware(['auth', 'role:manager,admin'])
         Route::get('/dashboard', DashboardOverview::class)->name('dashboard');
         Route::get('/inventory', InventoryDashboard::class)->name('manager.inventory');
         Route::get('/products', ProductManager::class)->name('manager.products');
+        Route::get('/products/create', ProductManager::class)->name('manager.products.create');
         Route::get('/inventory/stock-in', ManagerInventoryStockIn::class)->name('manager.stock-in');
+        Route::get('/inventory/stock-in/create', [ManagerInventoryStockIn::class, 'create'])->name('manager.stock-in.create');
         Route::get('/inventory/movements', StockMovementsTable::class)->name('manager.movements');
         Route::get('/reports/sales', SalesReport::class)->name('reports.sales');
+        Route::get('/reports/sales/create', [SalesReport::class, 'create'])->name('reports.sales.create');
         Route::get('/users', UserManager::class)->name('manager.users');
     });
 
@@ -90,10 +93,13 @@ Route::middleware(['auth', 'role:admin'])
         Route::get('/dashboard', AdminDashboard::class)->name('admin.dashboard');
         Route::get('/users', UserManager::class)->name('users.index');
         Route::get('/products', ProductManager::class)->name('admin.products');
+        Route::get('/products/create', ProductManager::class)->name('admin.products.create');
         Route::get('/inventory', InventoryDashboard::class)->name('admin.inventory');
         Route::get('/inventory/stock-in', ManagerInventoryStockIn::class)->name('admin.stock-in');
+        Route::get('/inventory/stock-in/create', ManagerInventoryStockIn::class)->name('admin.stock-in.create');
         Route::get('/inventory/movements', StockMovementsTable::class)->name('admin.movements');
         Route::get('/reports/sales', SalesReport::class)->name('admin.reports.sales');
+        Route::get('/reports/sales/create', SalesReport::class)->name('admin.reports.sales.create');
         Route::get('/transactions', TransactionHistory::class)->name('admin.transactions');
     });
 
