@@ -29,6 +29,40 @@
         </div>
     </div>
 
+    {{-- Sales Trend Chart --}}
+    <div class="card" style="margin-bottom:1.5rem;">
+        <div class="card-header"><span class="card-title">📈 Sales Trend</span></div>
+        <div style="position:relative; height:300px; padding:1.25rem;">
+            <canvas id="salesTrendChart"></canvas>
+        </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; margin-bottom:1.5rem;">
+        {{-- Sales by Category Chart --}}
+        <div class="card">
+            <div class="card-header"><span class="card-title">📊 Sales by Category</span></div>
+            <div style="position:relative; height:250px; padding:1.25rem;">
+                <canvas id="categoryChart"></canvas>
+            </div>
+        </div>
+
+        {{-- Export Options --}}
+        <div class="card">
+            <div class="card-header"><span class="card-title">💾 Export Options</span></div>
+            <div style="padding:1.25rem; display:flex; flex-direction:column; gap:0.75rem;">
+                <button wire:click="exportCsv" class="btn-secondary" style="width:100%; justify-content:center;">
+                    <i class="fa-solid fa-file-csv"></i> Export to CSV
+                </button>
+                <button wire:click="exportPdf" class="btn-secondary" style="width:100%; justify-content:center;">
+                    <i class="fa-solid fa-file-pdf"></i> Export to PDF
+                </button>
+                <button wire:click="printReport" class="btn-secondary" style="width:100%; justify-content:center;">
+                    <i class="fa-solid fa-print"></i> Print Report
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div style="display:grid; grid-template-columns:1fr 2fr; gap:1.25rem;">
 
         {{-- Best Sellers --}}
@@ -89,3 +123,188 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('livewire:init', () => {
+        // Sales Trend Chart
+        const trendCtx = document.getElementById('salesTrendChart');
+        if (trendCtx) {
+            const chartData = @json($this->chartData);
+            
+            new Chart(trendCtx.getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: chartData.labels || [],
+                    datasets: [
+                        {
+                            label: 'Revenue',
+                            data: chartData.revenue || [],
+                            borderColor: '#8a5a20',
+                            backgroundColor: 'rgba(138, 90, 32, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.3,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Transactions',
+                            data: chartData.transactions || [],
+                            borderColor: '#2d6a2d',
+                            backgroundColor: 'rgba(45, 106, 45, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.3,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 15,
+                                font: {
+                                    size: 11,
+                                    family: "'Lato', sans-serif"
+                                }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(26, 15, 10, 0.9)',
+                            titleFont: {
+                                size: 12,
+                                family: "'Lato', sans-serif"
+                            },
+                            bodyFont: {
+                                size: 11,
+                                family: "'Lato', sans-serif"
+                            },
+                            padding: 12,
+                            cornerRadius: 8,
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.datasetIndex === 0) {
+                                        label += '₱' + context.parsed.y.toLocaleString();
+                                    } else {
+                                        label += context.parsed.y + ' transactions';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Revenue (₱)',
+                                font: {
+                                    size: 10,
+                                    family: "'Lato', sans-serif"
+                                }
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return '₱' + value.toLocaleString();
+                                }
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'Transactions',
+                                font: {
+                                    size: 10,
+                                    family: "'Lato', sans-serif"
+                                }
+                            },
+                            grid: {
+                                drawOnChartArea: false,
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Sales by Category Chart
+        const categoryCtx = document.getElementById('categoryChart');
+        if (categoryCtx) {
+            const categoryData = @json($this->categoryData);
+            
+            new Chart(categoryCtx.getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: categoryData.labels || [],
+                    datasets: [{
+                        data: categoryData.data || [],
+                        backgroundColor: categoryData.colors || [],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 15,
+                                font: {
+                                    size: 11,
+                                    family: "'Lato', sans-serif"
+                                }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(26, 15, 10, 0.9)',
+                            titleFont: {
+                                size: 12,
+                                family: "'Lato', sans-serif"
+                            },
+                            bodyFont: {
+                                size: 11,
+                                family: "'Lato', sans-serif"
+                            },
+                            padding: 12,
+                            cornerRadius: 8,
+                            callbacks: {
+                                label: function(context) {
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = ((context.parsed / total) * 100).toFixed(1);
+                                    return context.label + ': ' + context.parsed + ' units (' + percentage + '%)';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    });
+
+    // Handle Livewire updates
+    document.addEventListener('livewire:updated', () => {
+        // Chart will be re-rendered automatically when component updates
+    });
+</script>
+@endpush
