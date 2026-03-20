@@ -11,11 +11,14 @@ class Payment extends Model
         'method',
         'cash_received',
         'change_amount',
+        'reference_number',
+        'payment_details',
     ];
 
     protected $casts = [
         'cash_received' => 'decimal:2',
         'change_amount' => 'decimal:2',
+        'payment_details' => 'array',
     ];
 
     public function transaction()

@@ -210,7 +210,7 @@
                                 wire:model.live="referenceNumber"
                                 type="text"
                                 placeholder="Enter reference number"
-                                class="cash-input {{ $errors->has('referenceNumber') ? 'border-red-500' : '' }}">
+                                class="cash-input @error('referenceNumber') ? 'border-red-500' : ''">
                             @error('referenceNumber')
                                 <div style="font-size:0.6rem; color:#ef4444; margin-top:0.2rem; line-height:1.3;">
                                     {{ $message }}
@@ -247,8 +247,8 @@
                     <span wire:loading.remove wire:target="confirmCheckout">Confirm Order</span>
                     <span wire:loading wire:target="confirmCheckout">Processing…</span>
                 </button>
+            </div>
         </div>
-    </div>
     </div>
 
     {{-- RECEIPT MODAL --}}
@@ -323,6 +323,7 @@
                 <button wire:click="closeReceipt" class="btn-new-sale">New Order →</button>
             </div>
         </div>
+    </div>
         </div>
     @endif
 
@@ -410,10 +411,10 @@
                     }, 250);
                 }, 250);
             }
+            })();
         })();
     </script>
 
     <style>
         /* Segmented pill styles are handled by Tailwind classes */
     </style>
-</div>

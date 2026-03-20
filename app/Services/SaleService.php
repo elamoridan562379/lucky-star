@@ -23,7 +23,7 @@ class SaleService
      * @throws ValidationException
      * @throws \Throwable
      */
-    public function checkout(array $cart, float $cashReceived, string $token, int $cashierId): Transaction
+    public function checkout(array $cart, float $cashReceived, string $token, int $cashierId, string $paymentMethod = 'cash', ?string $referenceNumber = null): Transaction
     {
         // ── Step 0: Idempotency check (outside transaction) ──────────────
         $existing = Transaction::with(['items.product', 'payment', 'cashier'])
@@ -35,7 +35,7 @@ class SaleService
         }
 
         // ── Step 1: Open DB transaction ───────────────────────────────────
-        return DB::transaction(function () use ($cart, $cashReceived, $token, $cashierId) {
+        return DB::transaction(function () use ($cart, $cashReceived, $token, $cashierId, $paymentMethod, $referenceNumber) {
 
             // ── Step 2: Lock product rows ─────────────────────────────────
             $productIds = collect($cart)->pluck('id')->unique()->values()->all();
@@ -66,6 +66,39 @@ class SaleService
                 throw ValidationException::withMessages(['cart' => $errors]);
             }
 
+            // ── Step 3.5: Validate payment method ───────────────────────────
+            $validPaymentMethods = ['cash', 'gcash', 'paymaya'];
+            if (! in_array($paymentMethod, $validPaymentMethods)) {
+                throw ValidationException::withMessages([
+                    'payment_method' => ["Invalid payment method: {$paymentMethod}"],
+                ]);
+            }
+
+            if (in_array($paymentMethod, ['gcash', 'paymaya']) && empty($referenceNumber)) {
+                throw ValidationException::withMessages([
+                    'reference_number' => ["Reference number is required for {$paymentMethod} payments."],
+                ]);
+            }
+
+            // Validate reference number format
+            if ($paymentMethod === 'gcash' && !empty($referenceNumber)) {
+                // GCash reference numbers are typically 9-12 digits
+                if (!preg_match('/^\d{9,12}$/', $referenceNumber)) {
+                    throw ValidationException::withMessages([
+                        'reference_number' => ["GCash reference number must be 9-12 digits."],
+                    ]);
+                }
+            }
+
+            if ($paymentMethod === 'paymaya' && !empty($referenceNumber)) {
+                // PayMaya reference numbers are typically 8-12 alphanumeric
+                if (!preg_match('/^[A-Za-z0-9]{8,12}$/', $referenceNumber)) {
+                    throw ValidationException::withMessages([
+                        'reference_number' => ["PayMaya reference number must be 8-12 alphanumeric characters."],
+                    ]);
+                }
+            }
+
             // ── Step 4: Calculate totals ──────────────────────────────────
             $subtotal = 0;
             foreach ($cart as $item) {
@@ -74,7 +107,7 @@ class SaleService
             $total        = $subtotal; // discount extension point
             $changeAmount = $cashReceived - $total;
 
-            if ($cashReceived < $total) {
+            if ($paymentMethod === 'cash' && $cashReceived < $total) {
                 throw ValidationException::withMessages([
                     'cash_received' => ["Cash received (₱{$cashReceived}) is less than total (₱{$total})."],
                 ]);
@@ -104,12 +137,21 @@ class SaleService
             }
 
             // ── Step 7: Create payment record ─────────────────────────────
-            Payment::create([
+            $paymentData = [
                 'transaction_id' => $transaction->id,
-                'method'         => 'cash',
-                'cash_received'  => $cashReceived,
-                'change_amount'  => $changeAmount,
-            ]);
+                'method'         => $paymentMethod,
+            ];
+
+            if ($paymentMethod === 'cash') {
+                $paymentData['cash_received'] = $cashReceived;
+                $paymentData['change_amount'] = $changeAmount;
+            } else {
+                $paymentData['reference_number'] = $referenceNumber;
+                $paymentData['cash_received'] = $total; // For consistency
+                $paymentData['change_amount'] = 0; // No change for digital payments
+            }
+
+            Payment::create($paymentData);
 
             // ── Step 8: Deduct stock + log movements ──────────────────────
             foreach ($cart as $item) {

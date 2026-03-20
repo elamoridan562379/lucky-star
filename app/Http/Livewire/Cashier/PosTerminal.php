@@ -18,6 +18,9 @@ class PosTerminal extends Component
     // ✅ make it string so it can be blank after checkout
     public string $cashReceived   = '';
 
+    public string $selectedPaymentMethod = 'cash';
+    public string $referenceNumber = '';
+
     public bool   $showReceipt    = false;
     public ?array $receiptData    = null;
     public string $checkoutToken  = '';
@@ -35,6 +38,8 @@ class PosTerminal extends Component
     {
         $this->checkoutToken = Str::uuid()->toString();
         $this->cashReceived = '';
+        $this->selectedPaymentMethod = 'cash';
+        $this->referenceNumber = '';
     }
 
     // ── Computed ───────────────────────────────────────────
@@ -77,7 +82,9 @@ class PosTerminal extends Component
     public function addToCart(int $productId): void
     {
         $product = Product::active()->find($productId);
-        if (! $product) return;
+        if (! $product) {
+            return;
+        }
 
         $key = (string) $productId;
 
@@ -138,6 +145,8 @@ class PosTerminal extends Component
     {
         $this->cart = [];
         $this->cashReceived = ''; // ✅ blank after confirm
+        $this->selectedPaymentMethod = 'cash';
+        $this->referenceNumber = '';
         $this->errorMessage = null;
         $this->processing = false;
     }
@@ -152,8 +161,14 @@ class PosTerminal extends Component
             return;
         }
 
-        if ($this->cashFloat < $this->total) {
+        // Validate payment method specific requirements
+        if ($this->selectedPaymentMethod === 'cash' && $this->cashFloat < $this->total) {
             $this->errorMessage = 'Cash received is less than total.';
+            return;
+        }
+
+        if (in_array($this->selectedPaymentMethod, ['gcash', 'paymaya']) && empty($this->referenceNumber)) {
+            $this->errorMessage = 'Reference number is required for digital payments.';
             return;
         }
 
@@ -169,7 +184,9 @@ class PosTerminal extends Component
                 $cartPayload,
                 $this->cashFloat,
                 $this->checkoutToken,
-                auth()->id()
+                auth()->id(),
+                $this->selectedPaymentMethod,
+                $this->referenceNumber ?: null
             );
 
             $this->receiptData = $this->buildReceiptData($transaction);
@@ -207,6 +224,8 @@ class PosTerminal extends Component
             'receipt_no'    => $transaction->receipt_no,
             'cashier'       => $transaction->cashier->name,
             'created_at'    => $transaction->created_at->format('Y-m-d H:i:s'),
+            'payment_method' => $transaction->payment->method,
+            'reference_number' => $transaction->payment->reference_number,
             'items'         => $transaction->items->map(fn ($i) => [
                 'name'       => $i->product->name,
                 'qty'        => $i->qty,
