@@ -73,22 +73,43 @@
             letter-spacing: 0.04em;
             color: rgba(245,234,216,0.82);
             text-decoration: none;
+<<<<<<< HEAD
             transition: all 0.15s;
             position: relative;
         }
         .nav-item:hover {
             color: rgba(255,255,255,0.95);
             background: rgba(255,255,255,0.10);
+=======
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            transform: translateX(0);
+        }
+        .nav-item:hover {
+            color: rgba(255,255,255,0.95);
+            background: rgba(255,255,255,0.12);
+            transform: translateX(2px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .nav-item:active {
+            transform: translateX(1px) scale(0.98);
+>>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
         }
 
         .nav-item.active {
             color: rgba(255,255,255,0.98);
+<<<<<<< HEAD
             background: rgba(255,255,255,0.16);
+=======
+            background: rgba(255,255,255,0.18);
+            box-shadow: 0 2px 12px rgba(212,168,71,0.2);
+>>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
         }
 
         .nav-item.active::before {
             content: '';
             position: absolute;
+<<<<<<< HEAD
             left: 0; top: 20%; bottom: 20%;
             width: 3px;
             background: rgba(212,168,71,0.95);
@@ -96,6 +117,26 @@
         }
 
         .nav-icon { font-size: 0.9rem; width: 18px; text-align: center; flex-shrink: 0; }
+=======
+            left: 0; top: 15%; bottom: 15%;
+            width: 4px;
+            background: linear-gradient(180deg, var(--gold), var(--caramel));
+            border-radius: 0 3px 3px 0;
+            box-shadow: 0 0 8px rgba(212,168,71,0.4);
+        }
+
+        .nav-icon { 
+            font-size: 0.9rem; 
+            width: 18px; 
+            height: 18px;
+            text-align: center; 
+            flex-shrink: 0; 
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .nav-item:hover .nav-icon {
+            transform: scale(1.1);
+        }
+>>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
 
         .nav-section-label {
             font-size: 0.58rem;
@@ -122,9 +163,25 @@
             cursor: pointer;
             letter-spacing: 0.06em;
             text-transform: uppercase;
+<<<<<<< HEAD
             transition: color 0.15s;
         }
         .logout-btn:hover { color: rgba(255,120,120,0.85); }
+=======
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0.5rem 0;
+            border-radius: 6px;
+            position: relative;
+        }
+        .logout-btn:hover { 
+            color: rgba(255,120,120,0.9); 
+            background: rgba(255,120,120,0.08);
+            transform: translateX(2px);
+        }
+        .logout-btn:active {
+            transform: translateX(1px) scale(0.98);
+        }
+>>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
 
         /* Main content */
         .main-content {
@@ -335,18 +392,142 @@
         ::-webkit-scrollbar-thumb { background: rgba(74,37,24,0.2); border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(74,37,24,0.35); }
 
+<<<<<<< HEAD
+=======
+        /* Focus indicators for accessibility */
+        .nav-item:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 2px;
+            color: rgba(255,255,255,0.98);
+            background: rgba(255,255,255,0.15);
+        }
+        .logout-btn:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 2px;
+        }
+        .nav-item:focus {
+            outline: none;
+        }
+        .logout-btn:focus {
+            outline: none;
+        }
+
+        /* Skip to main content link */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: var(--gold);
+            color: var(--espresso);
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            z-index: 1000;
+            transition: top 0.3s;
+        }
+        .skip-link:focus {
+            top: 6px;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            :root {
+                --sidebar-w: 0px;
+            }
+            
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+                width: 280px;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .mobile-menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: fixed;
+                top: 1rem;
+                left: 1rem;
+                z-index: 101;
+                background: var(--roast);
+                color: var(--cream);
+                border: none;
+                border-radius: 8px;
+                padding: 0.5rem;
+                cursor: pointer;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                transition: all 0.2s;
+            }
+            
+            .mobile-menu-toggle:hover {
+                background: var(--espresso);
+                transform: scale(1.05);
+            }
+            
+            .mobile-overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.5);
+                z-index: 99;
+            }
+            
+            .mobile-overlay.show {
+                display: block;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .mobile-menu-toggle,
+            .mobile-overlay {
+                display: none !important;
+            }
+        }
+
+>>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
         a { color: inherit; text-decoration: none; }
     </style>
 </head>
 <body>
 
+<<<<<<< HEAD
 <!-- Sidebar -->
 <aside class="sidebar">
+=======
+<!-- Skip to main content link for accessibility -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- Mobile menu toggle -->
+<button class="mobile-menu-toggle" aria-label="Toggle menu" onclick="toggleMobileMenu()">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+</button>
+
+<!-- Mobile overlay -->
+<div class="mobile-overlay" onclick="toggleMobileMenu()"></div>
+
+<!-- Sidebar -->
+<aside class="sidebar" role="navigation" aria-label="Main navigation">
+>>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
     <div class="sidebar-brand">
         <span class="brand-name">✦ Lucky Star</span>
         <span class="brand-sub">Admin Portal</span>
     </div>
 
+<<<<<<< HEAD
     <nav class="sidebar-nav">
         <span class="nav-section-label">Overview</span>
         <a href="{{ route('admin.dashboard') }}" class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
@@ -380,6 +561,90 @@
         <span class="nav-section-label">System</span>
         <a href="{{ route('users.index') }}" class="nav-item {{ request()->routeIs('users.*') ? 'active' : '' }}">
             <span class="nav-icon">◎</span> Users
+=======
+    <nav class="sidebar-nav" role="menu" aria-label="Admin menu">
+        <span class="nav-section-label">Overview</span>
+        <a href="{{ route('admin.dashboard') }}" class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" role="menuitem" aria-label="Dashboard">
+            <span class="nav-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+            </span> Dashboard
+        </a>
+
+        <span class="nav-section-label">Catalog</span>
+        <a href="{{ route('manager.products') }}" class="nav-item {{ request()->routeIs('manager.products') ? 'active' : '' }}" role="menuitem" aria-label="Products">
+            <span class="nav-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+            </span> Products
+        </a>
+
+        <span class="nav-section-label">Inventory</span>
+        <a href="{{ route('manager.inventory') }}" class="nav-item {{ request()->routeIs('manager.inventory') ? 'active' : '' }}" role="menuitem" aria-label="Inventory Overview">
+            <span class="nav-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="1" x2="12" y2="23"></line>
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+            </span> Inventory Overview
+        </a>
+        <a href="{{ route('manager.stock-in') }}" class="nav-item {{ request()->routeIs('manager.stock-in') ? 'active' : '' }}" role="menuitem" aria-label="Stock In / Out">
+            <span class="nav-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="17 11 12 6 7 11"></polyline>
+                    <polyline points="7 13 12 18 17 13"></polyline>
+                </svg>
+            </span> Stock In / Out
+        </a>
+        <a href="{{ route('manager.movements') }}" class="nav-item {{ request()->routeIs('manager.movements') ? 'active' : '' }}" role="menuitem" aria-label="Movement Log">
+            <span class="nav-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+            </span> Movement Log
+        </a>
+
+        <span class="nav-section-label">Reports</span>
+        <a href="{{ route('reports.sales') }}" class="nav-item {{ request()->routeIs('reports.*') ? 'active' : '' }}" role="menuitem" aria-label="Sales Report">
+            <span class="nav-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                </svg>
+            </span> Sales Report
+        </a>
+        <a href="{{ route('transactions.index') }}" class="nav-item {{ request()->routeIs('transactions.*') ? 'active' : '' }}" role="menuitem" aria-label="Transactions">
+            <span class="nav-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                    <line x1="1" y1="10" x2="23" y2="10"></line>
+                </svg>
+            </span> Transactions
+        </a>
+
+        <span class="nav-section-label">System</span>
+        <a href="{{ route('users.index') }}" class="nav-item {{ request()->routeIs('users.*') ? 'active' : '' }}" role="menuitem" aria-label="Users">
+            <span class="nav-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+            </span> Users
+>>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
         </a>
     </nav>
 
@@ -388,13 +653,21 @@
         <div class="user-role">{{ ucfirst(auth()->user()->role) }}</div>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
+<<<<<<< HEAD
             <button type="submit" class="logout-btn">Sign out →</button>
+=======
+            <button type="submit" class="logout-btn" aria-label="Sign out">Sign out →</button>
+>>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
         </form>
     </div>
 </aside>
 
 <!-- Main -->
+<<<<<<< HEAD
 <div class="main-content">
+=======
+<div class="main-content" id="main-content" role="main">
+>>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
     <div class="page-area">
         @if (session('success'))
             <div class="alert-success">✓ {{ session('success') }}</div>
@@ -405,5 +678,38 @@
 
 @livewireScripts
 @stack('scripts')
+<<<<<<< HEAD
+=======
+<script>
+function toggleMobileMenu() {
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.querySelector('.mobile-overlay');
+    
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('show');
+    
+    // Prevent body scroll when menu is open
+    if (sidebar.classList.contains('open')) {
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.style.overflow = '';
+    }
+}
+
+// Close menu when pressing Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.querySelector('.mobile-overlay');
+        
+        if (sidebar.classList.contains('open')) {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+    }
+});
+</script>
+>>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
 </body>
 </html>
