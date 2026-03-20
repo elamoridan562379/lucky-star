@@ -1,0 +1,109 @@
+erDiagram
+    users {
+        bigint id PK
+        string name
+        string email UK
+        string password
+        string role
+        enum status
+        timestamp email_verified_at
+        string remember_token
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    products {
+        bigint id PK
+        string name
+        enum category
+        decimal selling_price
+        decimal cost_price
+        int stock_qty
+        int reorder_level
+        int low_stock_threshold
+        boolean is_active
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    transactions {
+        bigint id PK
+        string receipt_no UK
+        string checkout_token UK
+        bigint cashier_id FK
+        decimal subtotal
+        decimal discount_total
+        decimal total
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    transaction_items {
+        bigint id PK
+        bigint transaction_id FK
+        bigint product_id FK
+        int qty
+        decimal unit_price
+        decimal cost_price_at_sale
+        decimal line_total
+    }
+
+    payments {
+        bigint id PK
+        bigint transaction_id FK
+        enum method
+        decimal cash_received
+        decimal change_amount
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    stock_movements {
+        bigint id PK
+        bigint product_id FK
+        enum type
+        int qty
+        enum reason
+        string ref_type
+        bigint ref_id
+        text notes
+        bigint created_by FK
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    inventory_receipts {
+        bigint id PK
+        string receipt_no UK
+        date received_at
+        string supplier
+        text remarks
+        bigint created_by FK
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    inventory_receipt_items {
+        bigint id PK
+        bigint inventory_receipt_id FK
+        bigint product_id FK
+        int qty
+        decimal unit_cost
+    }
+
+    user_activities {
+        bigint id PK
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    users ||--o{ transactions : "processes"
+    users ||--o{ stock_movements : "creates"
+    users ||--o{ inventory_receipts : "creates"
+    transactions ||--o{ transaction_items : "contains"
+    transactions ||--|| payments : "has"
+    transactions ||--o{ stock_movements : "generates"
+    products ||--o{ transaction_items : "sold_in"
+    products ||--o{ stock_movements : "tracked_in"
+    products ||--o{ inventory_receipt_items : "received_in"
+    inventory_receipts ||--o{ inventory_receipt_items : "contains"

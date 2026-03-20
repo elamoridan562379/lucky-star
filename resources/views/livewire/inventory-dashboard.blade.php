@@ -32,6 +32,12 @@
             <div class="kpi-value" style="color:#2d5a2d">{{ $totalProducts - $criticalCount - $lowStockCount }}</div>
             <div class="kpi-sub">Healthy levels</div>
         </div>
+
+        <div class="kpi-card kpi-gold">
+            <div class="kpi-label">Total Value</div>
+            <div class="kpi-value">₱{{ number_format($totalValue, 2) }}</div>
+            <div class="kpi-sub">Inventory worth</div>
+        </div>
     </div>
 
     <!-- Filters -->
@@ -42,6 +48,10 @@
         </div>
         <div class="p-6">
             <div style="display:flex; flex-wrap:wrap; gap:1.25rem;">
+                <div style="flex:1; min-width:200px;">
+                    <label class="form-label">Search Products</label>
+                    <input wire:model.live="search" type="text" class="form-input" placeholder="Search by product name...">
+                </div>
                 <div style="flex:1; min-width:200px;">
                     <label class="form-label">Stock Status</label>
                     <select wire:model.live="filter" class="form-input">
@@ -67,7 +77,7 @@
     <!-- Products Grid -->
     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(350px, 1fr)); gap:1.25rem; margin-bottom:1.75rem; flex: 1; min-height: 0; width: 100%;">
         @foreach($products as $product)
-            <div class="card" style="border-left: 4px solid {{ $product->stock_status === 'critical' ? '#c0392b' : ($product->stock_status === 'low' ? '#d4a847' : '#3d7a3d') }}">
+            <div class="card" style="border-left: 4px solid {{ $product->stock_status === 'critical' ? '#c0392b' : ($product->stock_status === 'low' ? '#d4a847' : '#3d7a3d') }}" wire:key="product-{{ $product->id }}">
                 <div class="p-4">
                     <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.75rem;">
                         <h3 style="font-family:'Playfair Display',serif; font-weight:700; color:var(--roast); font-size:1rem;">{{ $product->name }}</h3>
@@ -75,7 +85,20 @@
                             {{ ucfirst($product->stock_status) }}
                         </span>
                     </div>
-                    
+
+                    <!-- Stock Progress Bar -->
+                    <div style="margin-bottom:0.75rem;">
+                        <div style="display:flex; justify-content:space-between; margin-bottom:0.25rem;">
+                            <span style="font-size:0.7rem; color:#9a7a68;">Stock Level</span>
+                            <span style="font-size:0.7rem; font-weight:700; color:{{ $product->stock_status === 'critical' ? '#c0392b' : ($product->stock_status === 'low' ? '#8a5a20' : '#2d5a2d') }}">
+                                {{ $this->getStockPercentage($product) }}%
+                            </span>
+                        </div>
+                        <div style="background:#f0e8d8; border-radius:10px; height:8px; overflow:hidden;">
+                            <div style="height:100%; width:{{ $this->getStockPercentage($product) }}%; background:{{ $product->stock_status === 'critical' ? '#c0392b' : ($product->stock_status === 'low' ? '#d4a847' : '#3d7a3d') }}; transition:width 0.3s ease;"></div>
+                        </div>
+                    </div>
+
                     <div style="font-size:0.82rem; color:#3d2415; display:grid; gap:0.4rem;">
                         <div style="display:flex; justify-content:space-between;">
                             <span style="color:#9a7a68;">Current Stock:</span>
@@ -102,6 +125,22 @@
                             <strong>⚠️ Low Stock:</strong> Consider restocking soon.
                         </div>
                     @endif
+
+                    <!-- Quick Actions -->
+                    <div style="margin-top:1rem; display:flex; gap:0.5rem;">
+                        @if($product->stock_status === 'critical')
+                            <button wire:click="quickStockIn({{ $product->id }}, 20)" wire:key="critical-{{ $product->id }}" class="btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.7rem; flex:1;">
+                                +20 Quick Restock
+                            </button>
+                        @elseif($product->stock_status === 'low')
+                            <button wire:click="quickStockIn({{ $product->id }}, 10)" wire:key="low-{{ $product->id }}" class="btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.7rem; flex:1;">
+                                +10 Quick Restock
+                            </button>
+                        @endif
+                        <a href="{{ route('inventory.stock-in') }}?product={{ $product->id }}" class="btn-link" style="padding: 0.4rem 0.8rem; font-size: 0.7rem; white-space:nowrap;">
+                            Details →
+                        </a>
+                    </div>
                 </div>
             </div>
         @endforeach
@@ -153,4 +192,3 @@
         </div>
     </div>
 </div>
-

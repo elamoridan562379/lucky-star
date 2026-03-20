@@ -64,10 +64,9 @@ class UserManager extends Component
 
     public function getAvailableRolesForEditing(): array
     {
-        if (! $this->editId) {
+        if (!$this->editId) {
             return [];
         }
-
         return $this->userManagementService->getAvailableRolesForEditing(auth()->user()->role, $this->editId);
     }
 
@@ -106,7 +105,7 @@ class UserManager extends Component
 
     public function openEdit(int $id): void
     {
-        if (! $this->getCanEditUser($id)) {
+        if (!$this->getCanEditUser($id)) {
             session()->flash('error', 'You do not have permission to edit this user.');
             return;
         }
@@ -119,13 +118,13 @@ class UserManager extends Component
         $this->role = $user->role;
         $this->status = $user->status ?? 'active';
         $this->password = '';
-        $this->search = '';
+        $this->search = ''; // Clear search when editing
         $this->showModal = true;
     }
 
     public function openDelete(int $id): void
     {
-        if (! $this->getCanDeleteUsers()) {
+        if (!$this->getCanDeleteUsers()) {
             session()->flash('error', 'You do not have permission to delete users.');
             return;
         }
@@ -138,7 +137,7 @@ class UserManager extends Component
     {
         $user = User::findOrFail($id);
 
-        if (! $this->canResetUser($user)) {
+        if (!$this->canResetUser($user)) {
             session()->flash('error', 'You cannot reset this account.');
             return;
         }
@@ -151,13 +150,13 @@ class UserManager extends Component
 
     public function resetUserPassword(): void
     {
-        if (! $this->resetId) {
+        if (!$this->resetId) {
             return;
         }
 
         $user = User::findOrFail($this->resetId);
 
-        if (! $this->canResetUser($user)) {
+        if (!$this->canResetUser($user)) {
             session()->flash('error', 'You cannot reset this account.');
             $this->showResetModal = false;
             $this->resetId = null;
@@ -196,7 +195,7 @@ class UserManager extends Component
             ]);
 
             session()->flash('success', 'User deleted successfully.');
-        } elseif (! $this->getCanDeleteUsers()) {
+        } elseif (!$this->getCanDeleteUsers()) {
             session()->flash('error', 'Only administrators can delete users.');
         }
 
@@ -208,12 +207,14 @@ class UserManager extends Component
     {
         $this->validate();
 
-        if (! $this->editId && ! $this->userManagementService->canCreateUser(auth()->user()->role, $this->role)) {
+        // Check if user can create this role
+        if (!$this->editId && !$this->userManagementService->canCreateUser(auth()->user()->role, $this->role)) {
             session()->flash('error', 'You do not have permission to create users with this role.');
             return;
         }
 
-        if ($this->editId && ! $this->getCanEditUser($this->editId)) {
+        // Check if user can edit this user
+        if ($this->editId && !$this->getCanEditUser($this->editId)) {
             session()->flash('error', 'You do not have permission to edit this user.');
             return;
         }
@@ -275,8 +276,7 @@ class UserManager extends Component
         $this->password = '';
         $this->role = 'cashier';
         $this->status = 'active';
-        $this->search = '';
-
+        $this->search = ''; // Clear search on reset
         $this->resetValidation();
     }
 

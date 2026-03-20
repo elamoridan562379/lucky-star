@@ -32,7 +32,7 @@ class PasswordResetLinkController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (! $user || $user->role !== 'admin') {
+        if (!$user || $user->role !== 'admin') {
             return back()
                 ->withInput($request->only('email'))
                 ->withErrors([

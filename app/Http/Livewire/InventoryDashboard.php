@@ -13,13 +13,16 @@ class InventoryDashboard extends Component
 
     public string $filter = 'all';
     public string $category = 'all';
+    public string $search = '';
     public int $criticalCount = 0;
     public int $lowStockCount = 0;
     public int $totalProducts = 0;
+    public float $totalValue = 0;
 
     protected $queryString = [
         'filter' => ['except' => 'all'],
         'category' => ['except' => 'all'],
+        'search' => ['except' => ''],
     ];
 
     public function mount(): void
@@ -32,6 +35,11 @@ class InventoryDashboard extends Component
         $this->criticalCount = Product::criticalStock()->count();
         $this->lowStockCount = Product::lowStock()->count();
         $this->totalProducts = Product::active()->count();
+        
+        $products = Product::active()->get(['stock_qty', 'cost_price']);
+        $this->totalValue = $products->sum(function($product) {
+            return $product->stock_qty * ($product->cost_price ?? 0);
+        });
     }
 
     public function getProductsProperty()
@@ -39,6 +47,11 @@ class InventoryDashboard extends Component
         $query = Product::active()->with(['stockMovements' => function ($q) {
             $q->latest()->limit(1);
         }]);
+
+        // Apply search
+        if (!empty($this->search)) {
+            $query->where('name', 'like', '%' . $this->search . '%');
+        }
 
         // Apply filter
         match ($this->filter) {
@@ -73,6 +86,47 @@ class InventoryDashboard extends Component
             ->get();
     }
 
+    public function quickStockIn($productId, $qty = 10): void
+    {
+        // Validate input
+        if (!$productId || !$qty) return;
+        
+        $product = Product::find($productId);
+        if (!$product) {
+            session()->flash('error', 'Product not found');
+            return;
+        }
+
+        // Create stock movement for this specific product only
+        StockMovement::create([
+            'product_id' => (int)$productId,
+            'type' => 'in',
+            'qty' => (int)$qty,
+            'reason' => 'restock',
+            'created_by' => auth()->id(),
+        ]);
+
+        // Update only this specific product's stock
+        $product->stock_qty += (int)$qty;
+        $product->save();
+
+        // Refresh stats and products
+        $this->refreshStats();
+        
+        // Dispatch event for UI update
+        $this->dispatch('stockUpdated', [
+            'productId' => (int)$productId,
+            'newStock' => $product->stock_qty,
+            'message' => "Added {$qty} units to {$product->name}"
+        ]);
+    }
+
+    public function getStockPercentage($product): float
+    {
+        if ($product->low_stock_threshold <= 0) return 100;
+        return min(100, ($product->stock_qty / $product->low_stock_threshold) * 100);
+    }
+
     public function render()
     {
         $layout = in_array(auth()->user()->role, ['admin', 'manager']) ? 'layouts.manager' : 'layouts.inventory-clerk';
@@ -81,6 +135,7 @@ class InventoryDashboard extends Component
             'products' => $this->products,
             'categories' => $this->categories,
             'recentMovements' => $this->recentMovements,
+            'totalValue' => $this->totalValue,
         ])->layout($layout);
     }
 }

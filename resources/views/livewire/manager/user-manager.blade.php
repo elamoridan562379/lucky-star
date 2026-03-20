@@ -14,13 +14,11 @@
     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem; gap:1rem;">
         <h1 class="page-title" style="margin-bottom:0;">Users</h1>
         <div style="display:flex; gap:1rem; align-items:center;">
-            <input
-                wire:model.live.debounce.300ms="search"
-                type="text"
-                placeholder="Search users..."
-                autocomplete="off"
-                style="padding:0.5rem 1rem; border:1px solid rgba(74,37,24,0.2); border-radius:8px; font-size:0.85rem; width:250px;"
-            >
+            <input wire:model.live.debounce.300ms="search"
+                   type="text"
+                   placeholder="Search users..."
+                   autocomplete="off"
+                   style="padding:0.5rem 1rem; border:1px solid rgba(74,37,24,0.2); border-radius:8px; font-size:0.85rem; width:250px;">
             <button wire:click="openCreate" class="btn-primary">+ Add User</button>
         </div>
     </div>
@@ -170,34 +168,6 @@
                 <div class="modal-footer">
                     <button wire:click="$set('showDeleteModal', false)" class="btn-secondary">Cancel</button>
                     <button wire:click="delete" class="btn-primary" style="background:#e05252; border-color:#e05252;">Delete User</button>
-                </div>
-            </div>
-        </div>
-    @endif
-
-    @if ($showResetModal)
-        <div class="modal-bg">
-            <div class="modal-box" style="max-width:460px;">
-                <div class="modal-header">
-                    <span class="modal-title">Reset Password</span>
-                    <button wire:click="$set('showResetModal', false)" class="modal-close">✕</button>
-                </div>
-
-                <div class="modal-body">
-                    <p style="margin:0 0 0.75rem 0; color:#4a2518; font-size:0.95rem;">
-                        Are you sure you want to reset the password for
-                        <strong>{{ $resetUserName }}</strong>?
-                    </p>
-                    <p style="margin:0; color:#7a5c44; font-size:0.85rem;">
-                        The system will generate a temporary password for this user.
-                    </p>
-                </div>
-
-                <div class="modal-footer">
-                    <button wire:click="$set('showResetModal', false)" class="btn-secondary">Cancel</button>
-                    <button wire:click="resetUserPassword" class="btn-primary" style="background:#b7791f; border-color:#b7791f;">
-                        Reset Password
-                    </button>
                 </div>
             </div>
         </div>
