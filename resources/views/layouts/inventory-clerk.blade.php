@@ -33,7 +33,7 @@
         /* Sidebar */
         .sidebar {
             width: var(--sidebar-w);
-            background: linear-gradient(180deg, #3d7a3d 0%, #2d5a2d 100%); /* Green theme for inventory */
+            background: linear-gradient(180deg, #3d7a3d 0%, #2d5a2d 100%);
             display: flex;
             flex-direction: column;
             position: fixed;
@@ -73,29 +73,47 @@
             letter-spacing: 0.04em;
             color: rgba(245,234,216,0.82);
             text-decoration: none;
-            transition: all 0.15s;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
+            transform: translateX(0);
         }
         .nav-item:hover {
             color: rgba(255,255,255,0.95);
-            background: rgba(255,255,255,0.10);
+            background: rgba(255,255,255,0.12);
+            transform: translateX(2px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .nav-item:active {
+            transform: translateX(1px) scale(0.98);
         }
 
         .nav-item.active {
             color: rgba(255,255,255,0.98);
-            background: rgba(255,255,255,0.16);
+            background: rgba(255,255,255,0.18);
+            box-shadow: 0 2px 12px rgba(212,168,71,0.2);
         }
 
         .nav-item.active::before {
             content: '';
             position: absolute;
-            left: 0; top: 20%; bottom: 20%;
-            width: 3px;
-            background: rgba(212,168,71,0.95);
-            border-radius: 0 2px 2px 0;
+            left: 0; top: 15%; bottom: 15%;
+            width: 4px;
+            background: linear-gradient(180deg, var(--gold), var(--caramel));
+            border-radius: 0 3px 3px 0;
+            box-shadow: 0 0 8px rgba(212,168,71,0.4);
         }
 
-        .nav-icon { font-size: 0.9rem; width: 18px; text-align: center; flex-shrink: 0; }
+        .nav-icon { 
+            font-size: 0.9rem; 
+            width: 18px; 
+            height: 18px;
+            text-align: center; 
+            flex-shrink: 0; 
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .nav-item:hover .nav-icon {
+            transform: scale(1.1);
+        }
 
         .nav-section-label {
             font-size: 0.58rem;
@@ -122,9 +140,19 @@
             cursor: pointer;
             letter-spacing: 0.06em;
             text-transform: uppercase;
-            transition: color 0.15s;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0.5rem 0;
+            border-radius: 6px;
+            position: relative;
         }
-        .logout-btn:hover { color: rgba(255,120,120,0.85); }
+        .logout-btn:hover { 
+            color: rgba(255,120,120,0.9); 
+            background: rgba(255,120,120,0.08);
+            transform: translateX(2px);
+        }
+        .logout-btn:active {
+            transform: translateX(1px) scale(0.98);
+        }
 
         /* Main content */
         .main-content {
@@ -325,28 +353,52 @@
     </div>
 
     <nav class="sidebar-nav">
-        <span class="nav-section-label">Dashboard</span>
-        <a href="{{ route('inventory.dashboard') }}" class="nav-item {{ request()->routeIs('inventory.dashboard') ? 'active' : '' }}">
-            <span class="nav-icon">◈</span> Inventory Overview
+        <span class="nav-section-label">Overview</span>
+        <a href="{{ route('inventory.dashboard') }}" class="nav-item {{ request()->routeIs('inventory.dashboard') ? 'active' : '' }}" role="menuitem" aria-label="Inventory Overview">
+            <span class="nav-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="1" x2="12" y2="23"></line>
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+            </span> Inventory Overview
         </a>
 
-        <span class="nav-section-label">Stock Management</span>
-        <a href="{{ route('inventory.stock-in') }}" class="nav-item {{ request()->routeIs('inventory.stock-in') ? 'active' : '' }}">
-            <span class="nav-icon">↕</span> Stock In / Out
+        <span class="nav-section-label">Inventory</span>
+        <a href="{{ route('inventory.stock-in') }}" class="nav-item {{ request()->routeIs('inventory.stock-in') ? 'active' : '' }}" role="menuitem" aria-label="Stock In / Out">
+            <span class="nav-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="17 11 12 6 7 11"></polyline>
+                    <polyline points="7 13 12 18 17 13"></polyline>
+                </svg>
+            </span> Stock In / Out
         </a>
-        <a href="{{ route('inventory.movements') }}" class="nav-item {{ request()->routeIs('inventory.movements') ? 'active' : '' }}">
-            <span class="nav-icon">≡</span> Movement Log
+        <a href="{{ route('inventory.movements') }}" class="nav-item {{ request()->routeIs('inventory.movements') ? 'active' : '' }}" role="menuitem" aria-label="Movement Log">
+            <span class="nav-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+            </span> Movement Log
         </a>
 
         <span class="nav-section-label">Catalog</span>
-        <a href="{{ route('inventory.products') }}" class="nav-item {{ request()->routeIs('inventory.products') ? 'active' : '' }}">
-            <span class="nav-icon">☕</span> Product Catalog
+        <a href="{{ route('inventory.products') }}" class="nav-item {{ request()->routeIs('inventory.products') ? 'active' : '' }}" role="menuitem" aria-label="Products">
+            <span class="nav-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+            </span> Products
         </a>
     </nav>
 
     <div class="sidebar-footer">
         <div class="user-name">{{ auth()->user()->name }}</div>
-        <div class="user-role">{{ ucfirst(str_replace('_', ' ', auth()->user()->role)) }}</div>
+        <div class="user-role">{{ ucfirst(auth()->user()->role) }}</div>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="logout-btn">Sign out →</button>
