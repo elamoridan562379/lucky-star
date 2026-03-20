@@ -85,7 +85,7 @@
                             {{ ucfirst($product->stock_status) }}
                         </span>
                     </div>
-                    
+
                     <!-- Stock Progress Bar -->
                     <div style="margin-bottom:0.75rem;">
                         <div style="display:flex; justify-content:space-between; margin-bottom:0.25rem;">
@@ -98,7 +98,7 @@
                             <div style="height:100%; width:{{ $this->getStockPercentage($product) }}%; background:{{ $product->stock_status === 'critical' ? '#c0392b' : ($product->stock_status === 'low' ? '#d4a847' : '#3d7a3d') }}; transition:width 0.3s ease;"></div>
                         </div>
                     </div>
-                    
+
                     <div style="font-size:0.82rem; color:#3d2415; display:grid; gap:0.4rem;">
                         <div style="display:flex; justify-content:space-between;">
                             <span style="color:#9a7a68;">Current Stock:</span>
@@ -192,4 +192,3 @@
         </div>
     </div>
 </div>
-

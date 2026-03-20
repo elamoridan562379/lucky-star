@@ -39,7 +39,11 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Strawberry Smoothie',      'category' => 'non_coffee',  'selling_price' => 120, 'cost_price' => 45, 'stock_qty' => 20, 'reorder_level' => 4,  'low_stock_threshold' => 6],
             ['name' => 'Mango Smoothie',           'category' => 'non_coffee',  'selling_price' => 120, 'cost_price' => 45, 'stock_qty' => 3,  'reorder_level' => 5, 'low_stock_threshold' => 8], // Critical stock demo
             ['name' => 'Iced Tea',                 'category' => 'non_coffee',  'selling_price' => 75,  'cost_price' => 25, 'stock_qty' => 60, 'reorder_level' => 10, 'low_stock_threshold' => 15],
+<<<<<<< HEAD
+            ['name' => 'Lemon Water',              'category' => 'non_coffee',  'selling_price' => 65,  'cost_price' => 20, 'stock_qty' => 0,  'reorder_level' => 5,  'low_stock_threshold' => 8],  // Out of stock demo
+=======
             ['name' => 'Lemon Water',              'category' => 'non_coffee',  'selling_price' => 65,  'cost_price' => 20, 'stock_qty' => 0,  'reorder_level' => 5, 'low_stock_threshold' => 8],  // Out of stock demo
+>>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
         ];
 
         foreach ($products as $data) {

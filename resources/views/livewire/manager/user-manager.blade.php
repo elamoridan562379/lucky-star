@@ -1,9 +1,21 @@
 <div>
+    @if (session()->has('success'))
+        <div class="alert-success" style="margin-bottom: 1rem;">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session()->has('error'))
+        <div class="alert-error" style="margin-bottom: 1rem;">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem; gap:1rem;">
         <h1 class="page-title" style="margin-bottom:0;">Users</h1>
         <div style="display:flex; gap:1rem; align-items:center;">
-            <input wire:model.live.debounce.300ms="search" 
-                   type="text" 
+            <input wire:model.live.debounce.300ms="search"
+                   type="text"
                    placeholder="Search users..."
                    autocomplete="off"
                    style="padding:0.5rem 1rem; border:1px solid rgba(74,37,24,0.2); border-radius:8px; font-size:0.85rem; width:250px;">
@@ -24,108 +36,141 @@
             </thead>
             <tbody>
                 @forelse ($users as $user)
-                <tr wire:key="user-{{ $user->id }}">
-                    <td style="font-weight:700; font-family:'Playfair Display',serif; font-size:0.88rem; {{ $user->status === 'inactive' ? 'color:#c8b0a0;' : '' }}">{{ $user->name }}</td>
-                    <td style="color:#7a5c44; font-size:0.8rem; {{ $user->status === 'inactive' ? 'color:#c8b0a0;' : '' }}">{{ $user->email }}</td>
-                    <td style="text-align:center;">
-                        <span class="badge {{ $user->role === 'manager' ? 'badge-manager' : ($user->role === 'inventory_clerk' ? 'badge-inventory' : 'badge-cashier') }}">
-                            {{ ucfirst($user->role) }}
-                        </span>
-                    </td>
-                    <td style="text-align:center;">
-                        <span class="badge {{ $user->status === 'active' ? 'badge-active' : 'badge-inactive' }}">
-                            {{ ucfirst($user->status) }}
-                        </span>
-                    </td>
-                    <td style="text-align:center;">
-                        @if ($user->id !== auth()->id())
-                            @if ($this->getCanEditUser($user->id))
-                                <button wire:click="openEdit({{ $user->id }})" class="btn-link">Edit</button>
+                    <tr wire:key="user-{{ $user->id }}">
+                        <td style="font-weight:700; font-family:'Playfair Display',serif; font-size:0.88rem; {{ $user->status === 'inactive' ? 'color:#c8b0a0;' : '' }}">
+                            {{ $user->name }}
+                        </td>
+                        <td style="color:#7a5c44; font-size:0.8rem; {{ $user->status === 'inactive' ? 'color:#c8b0a0;' : '' }}">
+                            {{ $user->email ?: '—' }}
+                        </td>
+                        <td style="text-align:center;">
+                            <span class="badge {{ $user->role === 'manager' ? 'badge-manager' : ($user->role === 'inventory_clerk' ? 'badge-inventory' : ($user->role === 'admin' ? 'badge-admin' : 'badge-cashier')) }}">
+                                {{ ucfirst(str_replace('_', ' ', $user->role)) }}
+                            </span>
+                        </td>
+                        <td style="text-align:center;">
+                            <span class="badge {{ $user->status === 'active' ? 'badge-active' : 'badge-inactive' }}">
+                                {{ ucfirst($user->status) }}
+                            </span>
+                        </td>
+                        <td style="text-align:center;">
+                            @if ($user->id !== auth()->id())
+                                @if ($this->getCanEditUser($user->id))
+                                    <button wire:click="openEdit({{ $user->id }})" class="btn-link">Edit</button>
+                                @else
+                                    <span style="font-size:0.72rem; color:#c8b0a0;">Locked</span>
+                                @endif
+
+                                @if ($this->getCanDeleteUsers())
+                                    <button wire:click="openDelete({{ $user->id }})" class="btn-link btn-delete" style="color:#e05252;">
+                                        Delete
+                                    </button>
+                                @endif
                             @else
-                                <span style="font-size:0.72rem; color:#c8b0a0;">Locked</span>
+                                <span style="font-size:0.72rem; color:#c8b0a0;">You</span>
                             @endif
-                            
-                            @if ($this->getCanDeleteUsers())
-                                <button wire:click="openDelete({{ $user->id }})" class="btn-link btn-delete" style="color:#e05252;">Delete</button>
-                            @endif
-                        @else
-                            <span style="font-size:0.72rem; color:#c8b0a0;">You</span>
-                        @endif
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
                 @empty
-                <tr><td colspan="5" style="text-align:center; padding:3rem; color:#c8b0a0; font-style:italic; font-family:'Playfair Display',serif;">No users found.</td></tr>
+                    <tr>
+                        <td colspan="5" style="text-align:center; padding:3rem; color:#c8b0a0; font-style:italic; font-family:'Playfair Display',serif;">
+                            No users found.
+                        </td>
+                    </tr>
                 @endforelse
             </tbody>
         </table>
-        <div style="padding:1rem 1.25rem; border-top:1px solid rgba(74,37,24,0.06);">{{ $users->links() }}</div>
+
+        <div style="padding:1rem 1.25rem; border-top:1px solid rgba(74,37,24,0.06);">
+            {{ $users->links() }}
+        </div>
     </div>
 
     @if ($showModal)
-    <div class="modal-bg">
-        <div class="modal-box">
-            <div class="modal-header">
-                <span class="modal-title">{{ $editId ? 'Edit User' : 'New User' }}</span>
-                <button wire:click="$set('showModal', false)" class="modal-close">✕</button>
-            </div>
-            <div class="modal-body" style="display:flex; flex-direction:column; gap:1rem;">
-                <div>
-                    <label class="form-label">Name *</label>
-                    <input wire:model="name" type="text" class="form-input">
-                    @error('name')<span class="form-error">{{ $message }}</span>@enderror
+        <div class="modal-bg">
+            <div class="modal-box">
+                <div class="modal-header">
+                    <span class="modal-title">{{ $editId ? 'Edit User' : 'New User' }}</span>
+                    <button wire:click="$set('showModal', false)" class="modal-close">✕</button>
                 </div>
-                <div>
-                    <label class="form-label">Email *</label>
-                    <input wire:model="email" type="email" autocomplete="off" class="form-input">
-                    @error('email')<span class="form-error">{{ $message }}</span>@enderror
+
+                <div class="modal-body" style="display:flex; flex-direction:column; gap:1rem;">
+                    <div>
+                        <label class="form-label">Name *</label>
+                        <input wire:model="name" type="text" class="form-input">
+                        @error('name')<span class="form-error">{{ $message }}</span>@enderror
+                    </div>
+
+                    <div>
+                        <label class="form-label">
+                            Email {{ $role === 'admin' ? '*' : '(optional)' }}
+                        </label>
+                        <input wire:model="email" type="email" autocomplete="off" class="form-input">
+                        @error('email')<span class="form-error">{{ $message }}</span>@enderror
+
+                        @if($role === 'admin')
+                            <div style="margin-top:0.35rem; font-size:0.78rem; color:#7a5c44;">
+                                Admin accounts must have a valid email for password recovery.
+                            </div>
+                        @else
+                            <div style="margin-top:0.35rem; font-size:0.78rem; color:#7a5c44;">
+                                Non-admin accounts are reset directly by the admin.
+                            </div>
+                        @endif
+                    </div>
+
+                    <div>
+                        <label class="form-label">Password {{ $editId ? '(leave blank to keep current)' : '*' }}</label>
+                        <input wire:model="password" type="password" autocomplete="new-password" class="form-input">
+                        @error('password')<span class="form-error">{{ $message }}</span>@enderror
+                    </div>
+
+                    <div>
+                        <label class="form-label">Role *</label>
+                        <select wire:model="role" class="form-input">
+                            @foreach ($this->getAvailableRolesForCreation() as $roleKey => $roleLabel)
+                                <option value="{{ $roleKey }}">{{ $roleLabel }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="form-label">Status *</label>
+                        <select wire:model="status" class="form-input">
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
                 </div>
-                <div>
-                    <label class="form-label">Password {{ $editId ? '(leave blank to keep current)' : '*' }}</label>
-                    <input wire:model="password" type="password" autocomplete="new-password" class="form-input">
-                    @error('password')<span class="form-error">{{ $message }}</span>@enderror
+
+                <div class="modal-footer">
+                    <button wire:click="$set('showModal', false)" class="btn-secondary">Cancel</button>
+                    <button wire:click="save" class="btn-primary">{{ $editId ? 'Update' : 'Create' }}</button>
                 </div>
-                <div>
-                    <label class="form-label">Role *</label>
-                    <select wire:model="role" class="form-input">
-                        @foreach ($this->getAvailableRolesForCreation() as $roleKey => $roleLabel)
-                            <option value="{{ $roleKey }}">{{ $roleLabel }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div>
-                    <label class="form-label">Status *</label>
-                    <select wire:model="status" class="form-input">
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
-                    </select>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button wire:click="$set('showModal', false)" class="btn-secondary">Cancel</button>
-                <button wire:click="save" class="btn-primary">{{ $editId ? 'Update' : 'Create' }}</button>
             </div>
         </div>
-    </div>
     @endif
 
     @if ($showDeleteModal)
-    <div class="modal-bg">
-        <div class="modal-box" style="max-width:400px;">
-            <div class="modal-header">
-                <span class="modal-title">Confirm Delete</span>
-                <button wire:click="$set('showDeleteModal', false)" class="modal-close">✕</button>
-            </div>
-            <div class="modal-body">
-                <p style="margin:0; color:#4a2518; font-size:0.95rem;">
-                    Are you sure you want to delete this user? This action cannot be undone.
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button wire:click="$set('showDeleteModal', false)" class="btn-secondary">Cancel</button>
-                <button wire:click="delete" class="btn-primary" style="background:#e05252; border-color:#e05252;">Delete User</button>
+        <div class="modal-bg">
+            <div class="modal-box" style="max-width:400px;">
+                <div class="modal-header">
+                    <span class="modal-title">Confirm Delete</span>
+                    <button wire:click="$set('showDeleteModal', false)" class="modal-close">✕</button>
+                </div>
+
+                <div class="modal-body">
+                    <p style="margin:0; color:#4a2518; font-size:0.95rem;">
+                        Are you sure you want to delete this user? This action cannot be undone.
+                    </p>
+                </div>
+
+                <div class="modal-footer">
+                    <button wire:click="$set('showDeleteModal', false)" class="btn-secondary">Cancel</button>
+                    <button wire:click="delete" class="btn-primary" style="background:#e05252; border-color:#e05252;">Delete User</button>
+                </div>
             </div>
         </div>
-    </div>
     @endif
 
     <style>
@@ -133,17 +178,26 @@
             background: #3d4a2e;
             color: #f5ead8;
         }
+
         .badge-active {
             background: #2d6a2d;
             color: white;
         }
+
         .badge-inactive {
             background: #8b7355;
             color: white;
         }
+
+        .badge-admin {
+            background: #6b3f1d;
+            color: #fff7ec;
+        }
+
         .btn-delete {
             margin-left: 0.5rem;
         }
+
         .btn-delete:hover {
             background: rgba(224,82,82,0.1);
             border-radius: 4px;

@@ -71,6 +71,16 @@
             font-size: 0.78rem;
             font-weight: 700;
             letter-spacing: 0.04em;
+<<<<<<< HEAD
+            color: rgba(245,234,216,0.82); /* ✅ brighter */
+            text-decoration: none;
+            transition: all 0.15s;
+            position: relative;
+        }
+        .nav-item:hover {
+            color: rgba(255,255,255,0.95);
+            background: rgba(255,255,255,0.10);
+=======
             color: rgba(245,234,216,0.82);
             text-decoration: none;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -85,17 +95,31 @@
         }
         .nav-item:active {
             transform: translateX(1px) scale(0.98);
+>>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
         }
 
         .nav-item.active {
             color: rgba(255,255,255,0.98);
+<<<<<<< HEAD
+            background: rgba(255,255,255,0.16);
+=======
             background: rgba(255,255,255,0.18);
             box-shadow: 0 2px 12px rgba(212,168,71,0.2);
+>>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
         }
 
         .nav-item.active::before {
             content: '';
             position: absolute;
+<<<<<<< HEAD
+            left: 0; top: 20%; bottom: 20%;
+            width: 3px;
+            background: rgba(212,168,71,0.95); /* ✅ gold */
+            border-radius: 0 2px 2px 0;
+        }
+
+        .nav-icon { font-size: 0.9rem; width: 18px; text-align: center; flex-shrink: 0; }
+=======
             left: 0; top: 15%; bottom: 15%;
             width: 4px;
             background: linear-gradient(180deg, var(--gold), var(--caramel));
@@ -114,6 +138,7 @@
         .nav-item:hover .nav-icon {
             transform: scale(1.1);
         }
+>>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
 
         .nav-section-label {
             font-size: 0.58rem;
@@ -140,6 +165,11 @@
             cursor: pointer;
             letter-spacing: 0.06em;
             text-transform: uppercase;
+<<<<<<< HEAD
+            transition: color 0.15s;
+        }
+        .logout-btn:hover { color: rgba(255,120,120,0.85); }
+=======
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             padding: 0.5rem 0;
             border-radius: 6px;
@@ -153,6 +183,7 @@
         .logout-btn:active {
             transform: translateX(1px) scale(0.98);
         }
+>>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
 
         /* Main content */
         .main-content {
@@ -377,6 +408,39 @@
 
     <nav class="sidebar-nav">
         <span class="nav-section-label">Overview</span>
+<<<<<<< HEAD
+        <a href="{{ route('dashboard') }}" class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+            <span class="nav-icon">◈</span> Dashboard
+        </a>
+
+        <span class="nav-section-label">Catalog</span>
+        <a href="{{ route('manager.products') }}" class="nav-item {{ request()->routeIs('manager.products') ? 'active' : '' }}">
+            <span class="nav-icon">☕</span> Products
+        </a>
+
+        <span class="nav-section-label">Inventory</span>
+        <a href="{{ route('manager.inventory') }}" class="nav-item {{ request()->routeIs('manager.inventory') ? 'active' : '' }}">
+            <span class="nav-icon">◈</span> Inventory Overview
+        </a>
+        <a href="{{ route('manager.stock-in') }}" class="nav-item {{ request()->routeIs('manager.stock-in') ? 'active' : '' }}">
+            <span class="nav-icon">↕</span> Stock In / Out
+        </a>
+        <a href="{{ route('manager.movements') }}" class="nav-item {{ request()->routeIs('manager.movements') ? 'active' : '' }}">
+            <span class="nav-icon">≡</span> Movement Log
+        </a>
+
+        <span class="nav-section-label">Reports</span>
+        <a href="{{ route('reports.sales') }}" class="nav-item {{ request()->routeIs('reports.*') ? 'active' : '' }}">
+            <span class="nav-icon">↗</span> Sales Report
+        </a>
+        <a href="{{ route('transactions.index') }}" class="nav-item {{ request()->routeIs('transactions.*') ? 'active' : '' }}">
+            <span class="nav-icon">🧾</span> Transactions
+        </a>
+
+        <span class="nav-section-label">System</span>
+        <a href="{{ route('manager.users') }}" class="nav-item {{ request()->routeIs('manager.users') ? 'active' : '' }}">
+            <span class="nav-icon">◎</span> Users
+=======
         <a href="{{ route('dashboard') }}" class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}" role="menuitem" aria-label="Dashboard">
             <span class="nav-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -457,6 +521,7 @@
                     <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                 </svg>
             </span> Users
+>>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
         </a>
     </nav>
 
