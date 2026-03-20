@@ -73,14 +73,6 @@
             letter-spacing: 0.04em;
             color: rgba(245,234,216,0.82);
             text-decoration: none;
-<<<<<<< HEAD
-            transition: all 0.15s;
-            position: relative;
-        }
-        .nav-item:hover {
-            color: rgba(255,255,255,0.95);
-            background: rgba(255,255,255,0.10);
-=======
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             transform: translateX(0);
@@ -93,31 +85,17 @@
         }
         .nav-item:active {
             transform: translateX(1px) scale(0.98);
->>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
         }
 
         .nav-item.active {
             color: rgba(255,255,255,0.98);
-<<<<<<< HEAD
-            background: rgba(255,255,255,0.16);
-=======
             background: rgba(255,255,255,0.18);
             box-shadow: 0 2px 12px rgba(212,168,71,0.2);
->>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
         }
 
         .nav-item.active::before {
             content: '';
             position: absolute;
-<<<<<<< HEAD
-            left: 0; top: 20%; bottom: 20%;
-            width: 3px;
-            background: rgba(212,168,71,0.95);
-            border-radius: 0 2px 2px 0;
-        }
-
-        .nav-icon { font-size: 0.9rem; width: 18px; text-align: center; flex-shrink: 0; }
-=======
             left: 0; top: 15%; bottom: 15%;
             width: 4px;
             background: linear-gradient(180deg, var(--gold), var(--caramel));
@@ -136,7 +114,6 @@
         .nav-item:hover .nav-icon {
             transform: scale(1.1);
         }
->>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
 
         .nav-section-label {
             font-size: 0.58rem;
@@ -163,11 +140,6 @@
             cursor: pointer;
             letter-spacing: 0.06em;
             text-transform: uppercase;
-<<<<<<< HEAD
-            transition: color 0.15s;
-        }
-        .logout-btn:hover { color: rgba(255,120,120,0.85); }
-=======
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             padding: 0.5rem 0;
             border-radius: 6px;
@@ -181,7 +153,6 @@
         .logout-btn:active {
             transform: translateX(1px) scale(0.98);
         }
->>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
 
         /* Main content */
         .main-content {
@@ -392,8 +363,6 @@
         ::-webkit-scrollbar-thumb { background: rgba(74,37,24,0.2); border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(74,37,24,0.35); }
 
-<<<<<<< HEAD
-=======
         /* Focus indicators for accessibility */
         .nav-item:focus-visible {
             outline: 2px solid var(--gold);
@@ -494,16 +463,11 @@
             }
         }
 
->>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
         a { color: inherit; text-decoration: none; }
     </style>
 </head>
 <body>
 
-<<<<<<< HEAD
-<!-- Sidebar -->
-<aside class="sidebar">
-=======
 <!-- Skip to main content link for accessibility -->
 <a href="#main-content" class="skip-link">Skip to main content</a>
 
@@ -521,47 +485,11 @@
 
 <!-- Sidebar -->
 <aside class="sidebar" role="navigation" aria-label="Main navigation">
->>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
     <div class="sidebar-brand">
         <span class="brand-name">✦ Lucky Star</span>
         <span class="brand-sub">Admin Portal</span>
     </div>
 
-<<<<<<< HEAD
-    <nav class="sidebar-nav">
-        <span class="nav-section-label">Overview</span>
-        <a href="{{ route('admin.dashboard') }}" class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-            <span class="nav-icon">◈</span> Dashboard
-        </a>
-
-        <span class="nav-section-label">Catalog</span>
-        <a href="{{ route('manager.products') }}" class="nav-item {{ request()->routeIs('manager.products') ? 'active' : '' }}">
-            <span class="nav-icon">☕</span> Products
-        </a>
-
-        <span class="nav-section-label">Inventory</span>
-        <a href="{{ route('manager.inventory') }}" class="nav-item {{ request()->routeIs('manager.inventory') ? 'active' : '' }}">
-            <span class="nav-icon">◈</span> Inventory Overview
-        </a>
-        <a href="{{ route('manager.stock-in') }}" class="nav-item {{ request()->routeIs('manager.stock-in') ? 'active' : '' }}">
-            <span class="nav-icon">↕</span> Stock In / Out
-        </a>
-        <a href="{{ route('manager.movements') }}" class="nav-item {{ request()->routeIs('manager.movements') ? 'active' : '' }}">
-            <span class="nav-icon">≡</span> Movement Log
-        </a>
-
-        <span class="nav-section-label">Reports</span>
-        <a href="{{ route('reports.sales') }}" class="nav-item {{ request()->routeIs('reports.*') ? 'active' : '' }}">
-            <span class="nav-icon">↗</span> Sales Report
-        </a>
-        <a href="{{ route('transactions.index') }}" class="nav-item {{ request()->routeIs('transactions.*') ? 'active' : '' }}">
-            <span class="nav-icon">🧾</span> Transactions
-        </a>
-
-        <span class="nav-section-label">System</span>
-        <a href="{{ route('users.index') }}" class="nav-item {{ request()->routeIs('users.*') ? 'active' : '' }}">
-            <span class="nav-icon">◎</span> Users
-=======
     <nav class="sidebar-nav" role="menu" aria-label="Admin menu">
         <span class="nav-section-label">Overview</span>
         <a href="{{ route('admin.dashboard') }}" class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" role="menuitem" aria-label="Dashboard">
@@ -644,7 +572,6 @@
                     <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                 </svg>
             </span> Users
->>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
         </a>
     </nav>
 
@@ -653,21 +580,13 @@
         <div class="user-role">{{ ucfirst(auth()->user()->role) }}</div>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-<<<<<<< HEAD
-            <button type="submit" class="logout-btn">Sign out →</button>
-=======
             <button type="submit" class="logout-btn" aria-label="Sign out">Sign out →</button>
->>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
         </form>
     </div>
 </aside>
 
 <!-- Main -->
-<<<<<<< HEAD
-<div class="main-content">
-=======
 <div class="main-content" id="main-content" role="main">
->>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
     <div class="page-area">
         @if (session('success'))
             <div class="alert-success">✓ {{ session('success') }}</div>
@@ -678,8 +597,6 @@
 
 @livewireScripts
 @stack('scripts')
-<<<<<<< HEAD
-=======
 <script>
 function toggleMobileMenu() {
     const sidebar = document.querySelector('.sidebar');
@@ -710,6 +627,5 @@ document.addEventListener('keydown', function(e) {
     }
 });
 </script>
->>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
 </body>
 </html>

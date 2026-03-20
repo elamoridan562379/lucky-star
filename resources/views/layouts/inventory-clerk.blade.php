@@ -33,11 +33,7 @@
         /* Sidebar */
         .sidebar {
             width: var(--sidebar-w);
-<<<<<<< HEAD
-            background: linear-gradient(180deg, #3d7a3d 0%, #2d5a2d 100%); /* Green theme for inventory */
-=======
             background: linear-gradient(180deg, #3d7a3d 0%, #2d5a2d 100%);
->>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
             display: flex;
             flex-direction: column;
             position: fixed;
@@ -77,14 +73,6 @@
             letter-spacing: 0.04em;
             color: rgba(245,234,216,0.82);
             text-decoration: none;
-<<<<<<< HEAD
-            transition: all 0.15s;
-            position: relative;
-        }
-        .nav-item:hover {
-            color: rgba(255,255,255,0.95);
-            background: rgba(255,255,255,0.10);
-=======
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             transform: translateX(0);
@@ -97,31 +85,17 @@
         }
         .nav-item:active {
             transform: translateX(1px) scale(0.98);
->>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
         }
 
         .nav-item.active {
             color: rgba(255,255,255,0.98);
-<<<<<<< HEAD
-            background: rgba(255,255,255,0.16);
-=======
             background: rgba(255,255,255,0.18);
             box-shadow: 0 2px 12px rgba(212,168,71,0.2);
->>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
         }
 
         .nav-item.active::before {
             content: '';
             position: absolute;
-<<<<<<< HEAD
-            left: 0; top: 20%; bottom: 20%;
-            width: 3px;
-            background: rgba(212,168,71,0.95);
-            border-radius: 0 2px 2px 0;
-        }
-
-        .nav-icon { font-size: 0.9rem; width: 18px; text-align: center; flex-shrink: 0; }
-=======
             left: 0; top: 15%; bottom: 15%;
             width: 4px;
             background: linear-gradient(180deg, var(--gold), var(--caramel));
@@ -140,7 +114,6 @@
         .nav-item:hover .nav-icon {
             transform: scale(1.1);
         }
->>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
 
         .nav-section-label {
             font-size: 0.58rem;
@@ -167,11 +140,6 @@
             cursor: pointer;
             letter-spacing: 0.06em;
             text-transform: uppercase;
-<<<<<<< HEAD
-            transition: color 0.15s;
-        }
-        .logout-btn:hover { color: rgba(255,120,120,0.85); }
-=======
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             padding: 0.5rem 0;
             border-radius: 6px;
@@ -185,7 +153,6 @@
         .logout-btn:active {
             transform: translateX(1px) scale(0.98);
         }
->>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
 
         /* Main content */
         .main-content {
@@ -386,24 +353,6 @@
     </div>
 
     <nav class="sidebar-nav">
-<<<<<<< HEAD
-        <span class="nav-section-label">Dashboard</span>
-        <a href="{{ route('inventory.dashboard') }}" class="nav-item {{ request()->routeIs('inventory.dashboard') ? 'active' : '' }}">
-            <span class="nav-icon">◈</span> Inventory Overview
-        </a>
-
-        <span class="nav-section-label">Stock Management</span>
-        <a href="{{ route('inventory.stock-in') }}" class="nav-item {{ request()->routeIs('inventory.stock-in') ? 'active' : '' }}">
-            <span class="nav-icon">↕</span> Stock In / Out
-        </a>
-        <a href="{{ route('inventory.movements') }}" class="nav-item {{ request()->routeIs('inventory.movements') ? 'active' : '' }}">
-            <span class="nav-icon">≡</span> Movement Log
-        </a>
-
-        <span class="nav-section-label">Catalog</span>
-        <a href="{{ route('inventory.products') }}" class="nav-item {{ request()->routeIs('inventory.products') ? 'active' : '' }}">
-            <span class="nav-icon">☕</span> Product Catalog
-=======
         <span class="nav-section-label">Overview</span>
         <a href="{{ route('inventory.dashboard') }}" class="nav-item {{ request()->routeIs('inventory.dashboard') ? 'active' : '' }}" role="menuitem" aria-label="Inventory Overview">
             <span class="nav-icon">
@@ -444,17 +393,12 @@
                     <line x1="12" y1="22.08" x2="12" y2="12"></line>
                 </svg>
             </span> Products
->>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
         </a>
     </nav>
 
     <div class="sidebar-footer">
         <div class="user-name">{{ auth()->user()->name }}</div>
-<<<<<<< HEAD
         <div class="user-role">{{ ucfirst(str_replace('_', ' ', auth()->user()->role)) }}</div>
-=======
-        <div class="user-role">{{ ucfirst(auth()->user()->role) }}</div>
->>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="logout-btn">Sign out →</button>

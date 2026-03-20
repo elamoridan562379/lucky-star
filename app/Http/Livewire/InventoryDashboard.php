@@ -13,25 +13,16 @@ class InventoryDashboard extends Component
 
     public string $filter = 'all';
     public string $category = 'all';
-<<<<<<< HEAD
-    public int $criticalCount = 0;
-    public int $lowStockCount = 0;
-    public int $totalProducts = 0;
-=======
     public string $search = '';
     public int $criticalCount = 0;
     public int $lowStockCount = 0;
     public int $totalProducts = 0;
     public float $totalValue = 0;
->>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
 
     protected $queryString = [
         'filter' => ['except' => 'all'],
         'category' => ['except' => 'all'],
-<<<<<<< HEAD
-=======
         'search' => ['except' => ''],
->>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
     ];
 
     public function mount(): void
@@ -44,14 +35,11 @@ class InventoryDashboard extends Component
         $this->criticalCount = Product::criticalStock()->count();
         $this->lowStockCount = Product::lowStock()->count();
         $this->totalProducts = Product::active()->count();
-<<<<<<< HEAD
-=======
         
         $products = Product::active()->get(['stock_qty', 'cost_price']);
         $this->totalValue = $products->sum(function($product) {
             return $product->stock_qty * ($product->cost_price ?? 0);
         });
->>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
     }
 
     public function getProductsProperty()
@@ -60,14 +48,11 @@ class InventoryDashboard extends Component
             $q->latest()->limit(1);
         }]);
 
-<<<<<<< HEAD
-=======
         // Apply search
         if (!empty($this->search)) {
             $query->where('name', 'like', '%' . $this->search . '%');
         }
 
->>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
         // Apply filter
         match ($this->filter) {
             'critical' => $query->criticalStock(),
@@ -101,8 +86,6 @@ class InventoryDashboard extends Component
             ->get();
     }
 
-<<<<<<< HEAD
-=======
     public function quickStockIn($productId, $qty = 10): void
     {
         // Validate input
@@ -144,7 +127,6 @@ class InventoryDashboard extends Component
         return min(100, ($product->stock_qty / $product->low_stock_threshold) * 100);
     }
 
->>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
     public function render()
     {
         $layout = in_array(auth()->user()->role, ['admin', 'manager']) ? 'layouts.manager' : 'layouts.inventory-clerk';
@@ -153,10 +135,7 @@ class InventoryDashboard extends Component
             'products' => $this->products,
             'categories' => $this->categories,
             'recentMovements' => $this->recentMovements,
-<<<<<<< HEAD
-=======
             'totalValue' => $this->totalValue,
->>>>>>> 17e9c9617d7de32f80264abdd22516d36dfc6413
         ])->layout($layout);
     }
 }
